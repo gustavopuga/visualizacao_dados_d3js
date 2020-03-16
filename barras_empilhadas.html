@@ -1,7 +1,7 @@
 <!-- BASED ON https://www.d3-graph-gallery.com/ -->
 <!DOCTYPE html>
 <html>
-    
+
 <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.15.0/d3.min.js"></script>
     <title>Teste Boxplot</title>
@@ -30,7 +30,7 @@
                 "translate(" + margin.left + "," + margin.top + ")");
 
         // Parse the Data
-        d3.csv("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/data_stacked.csv", function (data) {
+        d3.csv("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/data_stacked.csv").then(function (data) {
 
             // List of subgroups = header of the csv files = soil condition here
             var subgroups = data.columns.slice(1)
