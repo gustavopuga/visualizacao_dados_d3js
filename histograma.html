@@ -52,7 +52,7 @@
                 "translate(" + margin.left + "," + margin.top + ")");
 
         // get the data
-        d3.csv("earthquakes.csv").then(function (data) {
+        d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/1_OneNum.csv").then(function (data) {
 
             // format the data
             data.forEach(function (d) {
