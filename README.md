@@ -3,3 +3,18 @@ Esta página armazena as atividades desenvolvida durante o curso de Visualizaç�
 
 ## Tarefa 1: Timeline
 [Clique aqui para visualizar](https://gustavopuga.github.io/visualizacao_dados_d3js/timeline.html)
+
+## Tarefa 2: Histograma
+[Clique aqui para visualizar](https://gustavopuga.github.io/visualizacao_dados_d3js/histograma.html)
+
+## Tarefa 3: Barras empilhadas
+[Clique aqui para visualizar](https://gustavopuga.github.io/visualizacao_dados_d3js/barras_empilhadas.html)
+
+## Tarefa 4: Boxplot
+[Clique aqui para visualizar](https://gustavopuga.github.io/visualizacao_dados_d3js/boxplot.html)
+
+## Tarefa 5: Dispersão
+[Clique aqui para visualizar](https://gustavopuga.github.io/visualizacao_dados_d3js/dispersao.html)
+
+## Tarefa 6: Radar
+[Clique aqui para visualizar](https://gustavopuga.github.io/visualizacao_dados_d3js/radar.html)
