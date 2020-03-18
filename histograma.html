@@ -46,10 +46,10 @@
             var histogram = d3.histogram()
                 .value(function (d) { return d.valorTransferido; })   // I need to give the vector of value
                 .domain(x.domain())  // then the domain of the graphic
-                .thresholds(x.ticks(70)); // then the numbers of bins
+                .thresholds(x.ticks(d3.timeMonth)); // then the numbers of bins
 
             // And apply this function to data to get the bins
-            var bins = histogram(data);
+            var bins = histogram(data);ß
 
             // Y axis: scale and draw:
             var y = d3.scaleLinear()
