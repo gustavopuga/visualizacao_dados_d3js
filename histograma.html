@@ -32,7 +32,7 @@
                 "translate(" + margin.left + "," + margin.top + ")");
 
         // get the data
-        d3.csv("https://raw.githubusercontent.com/gustavopuga/visualizacao_dados_d3js/master/datasets/barras_empilhadas.csv").then(function (data) {
+        d3.csv("https://raw.githubusercontent.com/gustavopuga/visualizacao_dados_d3js/master/datasets/histograma.csv").then(function (data) {
 
             // X axis: scale and draw:
             var x = d3.scaleLinear()
@@ -44,7 +44,7 @@
 
             // set the parameters for the histogram
             var histogram = d3.histogram()
-                .value(function (d) { console.info(d); return 0; })   // I need to give the vector of value
+                .value(function (d) { return d.valorTransferido; })   // I need to give the vector of value
                 .domain(x.domain())  // then the domain of the graphic
                 .thresholds(x.ticks(70)); // then the numbers of bins
 
