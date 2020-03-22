@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    
+
     <h1>Teste histograma</h1>
     <p id="graph"></p>
 
@@ -49,7 +49,11 @@
                 .thresholds(x.ticks(d3.timeMonth)); // then the numbers of bins
 
             // And apply this function to data to get the bins
-            var bins = histogram(data);
+            var bins = d3.histogram()
+                .domain(xScale.domain())
+                .thresholds(xScale.ticks(20)) // split into 20 bins
+                (data);
+            console.log(bins);
 
             // Y axis: scale and draw:
             var y = d3.scaleLinear()
@@ -68,6 +72,7 @@
                 .attr("width", function (d) { return x(d.x1) - x(d.x0) - 1; })
                 .attr("height", function (d) { return height - y(d.length); })
                 .style("fill", "#69b3a2")
+
 
         });
 
