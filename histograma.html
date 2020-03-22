@@ -50,8 +50,7 @@
 
             // And apply this function to data to get the bins
             var bins = histogram(data);
-            console.info(bins);
-            
+
             // Y axis: scale and draw:
             var y = d3.scaleLinear()
                 .range([height, 0]);
@@ -60,7 +59,7 @@
                 .call(d3.axisLeft(y));
 
             // append the bar rectangles to the svg element
-            svg.selectAll("rect")
+            /* svg.selectAll("rect")
                 .data(bins)
                 .enter()
                 .append("rect")
@@ -68,8 +67,32 @@
                 .attr("transform", function (d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
                 .attr("width", function (d) { return x(d.x1) - x(d.x0) - 1; })
                 .attr("height", function (d) { return height - y(d.length); })
-                .style("fill", "#69b3a2")
+                .style("fill", "#69b3a2"); */
 
+            svg.append("g")
+                .attr("class", "axis")
+                .attr("transform", "translate(0," + height + ")")
+                .call(d3.axisBottom(x));
+
+            var bar = svg.selectAll(".bar")
+                .data(bins)
+                .enter()
+                .append("g")
+                .attr("class", "bar")
+                .attr("transform", function (d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; });
+
+            var rects = bar.append("rect")
+                .attr("x", 1)// move 1px to right
+                .attr("width", x(bins[0].x1) - x(bins[0].x0) - 1)
+                .attr("height", function (d) { return height - y(d.length); });
+
+
+            bar.append("text")
+                .attr("y", 6)
+                .attr("x", (x(bins[0].x1) - x(bins[0].x0)) / 2)
+                .attr("text-anchor", "middle")
+                .text(function (d) { return formatCount(d.length); })
+                .attr("dy", ".75em");
 
         });
 
