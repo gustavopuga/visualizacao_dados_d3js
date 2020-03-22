@@ -4,29 +4,6 @@
 
 <head>
     <style>
-        .axis path {
-            /* 		fill: gray; */
-            stroke: green;
-
-        }
-
-        .tick line {
-            stroke: red;
-        }
-
-        .tick text {
-            fill: orange;
-        }
-
-        .bar rect {
-            fill: steelblue;
-        }
-
-
-        .bar text {
-            fill: #fff;
-            font: 10px sans-serif;
-        }
     </style>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.15.0/d3.min.js"></script>
@@ -34,13 +11,11 @@
 </head>
 
 <body>
-
+    
     <h1>Teste histograma</h1>
     <p id="graph"></p>
 
     <script>
-        
-        var formatCount = d3.format(",.0f");
 
         // set the dimensions and margins of the graph
         var margin = { top: 10, right: 30, bottom: 30, left: 40 },
@@ -63,9 +38,9 @@
             var x = d3.scaleTime()
                 .domain([new Date(2019, 2, 1), new Date(2020, 2, 1)])     // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
                 .range([0, width]);
-            /* svg.append("g")
+            svg.append("g")
                 .attr("transform", "translate(0," + height + ")")
-                .call(d3.axisBottom(x)); */
+                .call(d3.axisBottom(x));
 
             // set the parameters for the histogram
             var histogram = d3.histogram()
@@ -74,10 +49,7 @@
                 .thresholds(x.ticks(d3.timeMonth)); // then the numbers of bins
 
             // And apply this function to data to get the bins
-            var bins = d3.histogram()
-    .domain(x.domain()) 
-    .thresholds(x.ticks(20)) // split into 20 bins
-    (data);
+            var bins = histogram(data);
 
             // Y axis: scale and draw:
             var y = d3.scaleLinear()
@@ -87,7 +59,7 @@
                 .call(d3.axisLeft(y));
 
             // append the bar rectangles to the svg element
-            /* svg.selectAll("rect")
+            svg.selectAll("rect")
                 .data(bins)
                 .enter()
                 .append("rect")
@@ -95,32 +67,7 @@
                 .attr("transform", function (d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
                 .attr("width", function (d) { return x(d.x1) - x(d.x0) - 1; })
                 .attr("height", function (d) { return height - y(d.length); })
-                .style("fill", "#69b3a2"); */
-
-            svg.append("g")
-                .attr("class", "axis")
-                .attr("transform", "translate(0," + height + ")")
-                .call(d3.axisBottom(x));
-
-            var bar = svg.selectAll(".bar")
-                .data(bins)
-                .enter()
-                .append("g")
-                .attr("class", "bar")
-                .attr("transform", function (d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; });
-
-            var rects = bar.append("rect")
-                .attr("x", 1)// move 1px to right
-                .attr("width", x(bins[0].x1) - x(bins[0].x0) - 1)
-                .attr("height", function (d) { return height - y(d.length); });
-
-
-            bar.append("text")
-                .attr("y", 6)
-                .attr("x", (x(bins[0].x1) - x(bins[0].x0)) / 2)
-                .attr("text-anchor", "middle")
-                .text(function (d) { return formatCount(d.length); })
-                .attr("dy", ".75em");
+                .style("fill", "#69b3a2")
 
         });
 
