@@ -63,9 +63,9 @@
             var x = d3.scaleTime()
                 .domain([new Date(2019, 2, 1), new Date(2020, 2, 1)])     // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
                 .range([0, width]);
-            svg.append("g")
+            /* svg.append("g")
                 .attr("transform", "translate(0," + height + ")")
-                .call(d3.axisBottom(x));
+                .call(d3.axisBottom(x)); */
 
             // set the parameters for the histogram
             var histogram = d3.histogram()
@@ -74,7 +74,10 @@
                 .thresholds(x.ticks(d3.timeMonth)); // then the numbers of bins
 
             // And apply this function to data to get the bins
-            var bins = histogram(data);
+            var bins = d3.histogram()
+    .domain(x.domain()) 
+    .thresholds(x.ticks(20)) // split into 20 bins
+    (data);
 
             // Y axis: scale and draw:
             var y = d3.scaleLinear()
