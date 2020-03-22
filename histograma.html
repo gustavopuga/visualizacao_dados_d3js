@@ -49,12 +49,9 @@
                 .thresholds(x.ticks(d3.timeMonth)); // then the numbers of bins
 
             // And apply this function to data to get the bins
-            var bins = d3.histogram()
-                .domain(xScale.domain())
-                .thresholds(xScale.ticks(20)) // split into 20 bins
-                (data);
-            console.log(bins);
-
+            var bins = histogram(data);
+            console.info(bins);
+            
             // Y axis: scale and draw:
             var y = d3.scaleLinear()
                 .range([height, 0]);
