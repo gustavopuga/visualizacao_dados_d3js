@@ -30,10 +30,10 @@
                 "translate(" + margin.left + "," + margin.top + ")");
 
         // Parse the Data
-        d3.csv("https://raw.githubusercontent.com/gustavopuga/visualizacao_dados_d3js/master/datasets/barras_empilhadas.csv").then(function (data) {
+        d3.csv("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/data_stacked.csv").then(function (data) {
 
             // List of subgroups = header of the csv files = soil condition here
-            var subgroups = data.line.slice(1)
+            var subgroups = data.columns.slice(1)
 
             // List of groups = species here = value of the first column called group -> I show them on the X axis
             var groups = d3.map(data, function (d) { return (d.group) }).keys()
