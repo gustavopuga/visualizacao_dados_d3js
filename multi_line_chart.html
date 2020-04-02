@@ -23,16 +23,16 @@
             height = 270 - margin.top - margin.bottom;
 
         // Parse the date / time
-        var parseDate = d3.timeParse("%b %Y");
+        var parseDate = d3.timeParse("%mm/%Y");
 
         // Set the ranges
         var x = d3.scaleTime().range([0, width]);
         var y = d3.scaleLinear().range([height, 0]);
 
         // Define the line
-        var priceline = d3.line()
-            .x(function (d) { return x(d.date); })
-            .y(function (d) { return y(d.price); });
+        var linhaValorTransferido = d3.line()
+            .x(function (d) { return x(d.mesAno); })
+            .y(function (d) { return y(d.valorTransferido); });
 
         // Adds the svg canvas
         var svg = d3.select("#chart")
@@ -47,25 +47,25 @@
         d3.csv("stocks.csv").then(function (data) {
 
             data.forEach(function (d) {
-                d.date = parseDate(d.date);
-                d.price = +d.price;
+                d.mesAno = parseDate(d.mesAno);
+                d.valorTransferido = + Number(d.valorTransferido.replace(".","").replace(",",".").replace(/[^0-9.-]+/g,""));
             });
 
             // Scale the range of the data
-            x.domain(d3.extent(data, function (d) { return d.date; }));
-            y.domain([0, d3.max(data, function (d) { return d.price; })]);
+            x.domain(d3.extent(data, function (d) { return d.mesAno; }));
+            y.domain([0, d3.max(data, function (d) { return d.valorTransferido; })]);
 
-            // Nest the entries by symbol
+            // Nest the entries by UF
             var dataNest = d3.nest()
-                .key(function (d) { return d.symbol; })
+                .key(function (d) { return d.UF; })
                 .entries(data);
 
-            // Loop through each symbol / key
+            // Loop through each UF / key
             dataNest.forEach(function (d) {
 
                 svg.append("path")
                     .attr("class", "line")
-                    .attr("d", priceline(d.values));
+                    .attr("d", linhaValorTransferido(d.values));
 
             });
 
