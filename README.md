@@ -18,3 +18,6 @@ Esta página armazena as atividades desenvolvida durante o curso de Visualizaç�
 
 ## Tarefa 6: Radar
 [Clique aqui para visualizar](https://gustavopuga.github.io/visualizacao_dados_d3js/radar.html)
+
+## Tarefa 6: Multiplas linhas
+[Clique aqui para visualizar](https://gustavopuga.github.io/visualizacao_dados_d3js/multi_line_chart.html)
