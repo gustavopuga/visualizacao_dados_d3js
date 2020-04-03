@@ -98,12 +98,6 @@
                     .attr("class", "line")
                     .attr("d", linhaValorTransferido(d.values));
 
-                    svg.append("text")
-            .attr("x", (legendSpace/2)+i*legendSpace)
-            .attr("y", height + (margin.bottom/2)+ 5)
-            .attr("class", "legend")
-            .text(d.key); 
-
             });
 
             // Adiciona o eixo X
