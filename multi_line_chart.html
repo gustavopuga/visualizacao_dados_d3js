@@ -1,9 +1,8 @@
-<!-- BASED ON https://www.d3-graph-gallery.com/ -->
 <!DOCTYPE html>
 <html>
 
 <head>
-    <style> /* set the CSS */
+    <style>
 
         body { font: 12px Arial;}
         
@@ -34,24 +33,24 @@
 
     <script>
 
-        // Set the dimensions of the canvas / graph
+        // Dimensões do canvas / grafico
         var margin = { top: 30, right: 20, bottom: 30, left: 50 },
             width = 600 - margin.left - margin.right,
             height = 270 - margin.top - margin.bottom;
 
-        // Parse the date / time
+        // Conversao data / tempo
         var parseDate = d3.timeParse("%m-%Y");
 
-        // Set the ranges
+        // Define os ranges (intervalo)
         var x = d3.scaleTime().range([0, width]);
         var y = d3.scaleLinear().range([height, 0]);
 
-        // Define the line
+        // Cria / define a linha
         var linhaValorTransferido = d3.line()
             .x(function (d) { return x(d.mesAno); })
             .y(function (d) { return y(d.valorTransferido); });
 
-        // Adds the svg canvas
+        // Adiciona ao svg canvas
         var svg = d3.select("#chart")
             .append("svg")
             .attr("width", width + margin.left + margin.right)
@@ -60,7 +59,7 @@
             .attr("transform",
                 "translate(" + margin.left + "," + margin.top + ")");
 
-        // Get the data
+        // Le o csv
         d3.csv("https://raw.githubusercontent.com/gustavopuga/visualizacao_dados_d3js/master/datasets/multi_line_chart.csv").then(function (data) {
 
             data.forEach(function (d) {
@@ -68,16 +67,16 @@
                 d.valorTransferido = +d.valorTransferido;
             });
 
-            // Scale the range of the data
+            // Escala do range dos dados
             x.domain(d3.extent(data, function (d) { return d.mesAno; }));
             y.domain([0, d3.max(data, function (d) { return d.valorTransferido; })]);
 
-            // Nest the entries by UF
+            // Atribui entradas para UF
             var dataNest = d3.nest()
                 .key(function (d) { return d.UF; })
                 .entries(data);
 
-            // Loop through each UF / key
+            // Itera atribuindo UF / key
             dataNest.forEach(function (d) {
 
                 svg.append("path")
@@ -86,13 +85,13 @@
 
             });
 
-            // Add the X Axis
+            // Adiciona o eixo X
             svg.append("g")
                 .attr("class", "axis")
                 .attr("transform", "translate(0," + height + ")")
                 .call(d3.axisBottom(x));
 
-            // Add the Y Axis
+            // Adiciona o eixo Y
             svg.append("g")
                 .attr("class", "axis")
                 .call(d3.axisLeft(y));
