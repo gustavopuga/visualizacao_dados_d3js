@@ -60,7 +60,7 @@
                 "translate(" + margin.left + "," + margin.top + ")");
 
         // Le o csv
-        d3.csv("https://raw.githubusercontent.com/gustavopuga/visualizacao_dados_d3js/master/datasets/multi_line_chart.csv").then(function (data) {
+        d3.dsv(";", "https://raw.githubusercontent.com/gustavopuga/visualizacao_dados_d3js/master/datasets/multi_line_chart.csv").then(function (data) {
 
             data.forEach(function (d) {
                 d.mesAno = parseDate(d.mesAno);
