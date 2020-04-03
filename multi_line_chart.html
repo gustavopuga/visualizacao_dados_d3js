@@ -2,6 +2,32 @@
 <html>
 
 <head>
+
+    <style> /* set the CSS */
+
+        body { font: 12px Arial;}
+        
+        path { 
+            stroke: steelblue;
+            stroke-width: 2;
+            fill: none;
+        }
+        
+        .axis path,
+        .axis line {
+            fill: none;
+            stroke: grey;
+            stroke-width: 1;
+            shape-rendering: crispEdges;
+        }
+        
+        .legend {
+            font-size: 16px;
+            font-weight: bold;
+            text-anchor: middle;
+        }
+        
+        </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.15.0/d3.min.js"></script>
     <title>Transferências de Recursos da União aos Estados</title>
 </head>
@@ -15,8 +41,8 @@
 
         // Dimensões do canvas / grafico
         var margin = { top: 30, right: 20, bottom: 30, left: 50 },
-            width = 600 - margin.left - margin.right,
-            height = 270 - margin.top - margin.bottom;
+            width = 960 - margin.left - margin.right,
+            height = 500 - margin.top - margin.bottom;
 
         // Conversao data / tempo
         var parseDate = d3.timeParse("%m-%Y");
@@ -47,6 +73,11 @@
                 d.valorTransferido = +d.valorTransferido;
             });
 
+            //Ordena datas
+            data.sort(function(a, b) {
+                    return d3.ascending(+a.mesAno, +b.mesAno);
+            });
+                    
             // Escala do range dos dados
             x.domain(d3.extent(data, function (d) { return d.mesAno; }));
             y.domain([0, d3.max(data, function (d) { return d.valorTransferido; })]);
@@ -56,12 +87,35 @@
                 .key(function (d) { return d.UF; })
                 .entries(data);
 
-            // Itera atribuindo UF / key
-            dataNest.forEach(function (d) {
+            // set the colour scale
+            var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+            // Cria as linhas para cada UF
+            dataNest.forEach(function (d, i) {
 
                 svg.append("path")
+                .style("stroke", function() { return d.color = color(d.key); })
                     .attr("class", "line")
                     .attr("d", linhaValorTransferido(d.values));
+
+                    svg.append("text")
+            .attr("x", (legendSpace/2)+i*legendSpace)  // space legend
+            .attr("y", height + (margin.bottom/2)+ 5)
+            .attr("class", "legend")    // style the legend
+            .style("fill", function() { // Add the colours dynamically
+                return d.color = color(d.key); })
+            .on("click", function(){
+                // Determine if current line is visible 
+                var active   = d.active ? false : true,
+                newOpacity = active ? 0 : 1; 
+                // Hide or show the elements based on the ID
+                d3.select("#tag"+d.key.replace(/\s+/g, ''))
+                    .transition().duration(100) 
+                    .style("opacity", newOpacity); 
+                // Update whether or not the elements are active
+                d.active = active;
+                })  
+            .text(d.key); 
 
             });
 
