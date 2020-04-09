@@ -35,7 +35,7 @@
         const geoPath = d3.geoPath()
             .projection(projection);
 
-        const colorScale = d3.scaleSqrt(["hsla(240,100%,50%,.1)", "blue"]);
+        const colorScale = d3.scaleSqrt(["hsla(240,100%,50%,.1)", "red"]);
 
         const map = {};
 
@@ -70,7 +70,7 @@
         });
 
         let mouseOver = function (d) {
-            d3.selectAll(".country")
+            d3.selectAll(".state")
                 .transition()
                 .duration(200)
                 .style("opacity", .5)
@@ -82,7 +82,7 @@
         }
 
         let mouseLeave = function (d) {
-            d3.selectAll(".country")
+            d3.selectAll(".state")
                 .transition()
                 .duration(200)
                 .style("opacity", .8)
@@ -93,12 +93,11 @@
         }
 
         function draw() {
-            console.info(novo);
             svg.selectAll("path.country")
                 .data(map.features)
                 .enter()
                 .append("path")
-                .attr("class", "country")
+                .attr("class", "state")
                 .attr('d', geoPath)
                 .style("fill", d => colorScale(d.properties.population))
                 .on("mouseover", mouseOver)
