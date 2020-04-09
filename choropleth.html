@@ -79,27 +79,25 @@
             d3.selectAll(".state")
                 .transition()
                 .duration(200)
-                .style("opacity", .5);
+                .style("opacity", .5)
+                .text(d.properties.uf);
             d3.select(this)
                 .transition()
                 .duration(200)
                 .style("opacity", 1)
                 .style("stroke", "black");
-            d3.select(this)
-                .append('text')
-                .text(d.properties.uf);
         }
 
         let mouseLeave = function (d) {
             d3.selectAll(".state")
                 .transition()
                 .duration(200)
-                .style("opacity", .8);
+                .style("opacity", .8)
+                .select('text').remove();
             d3.select(this)
                 .transition()
                 .duration(200)
-                .style("stroke", "transparent")
-            d3.select(this).select('text').remove();
+                .style("stroke", "transparent");
         }
 
         function draw() {
