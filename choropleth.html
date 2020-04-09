@@ -71,7 +71,8 @@
             projection.fitSize([width, height], shapes);
 
             // configure the scale
-            colorScale.domain(d3.extent(map.features, d => d.properties.population))
+            colorScale.domain(d3.extent(map.features, d => d.properties.population));
+            areaScale.domain([0, d3.max(map.places, d => d.properties.population)])
             draw();
         });
 
