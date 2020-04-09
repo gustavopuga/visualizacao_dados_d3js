@@ -48,8 +48,8 @@
                 }
             })
         ]).then(function ([shapes, thematic]) {
-            console.log(shapes);   // shape data
-            console.log(thematic); // population data
+            console.info(shapes);   // shape data
+            console.info(thematic); // population data
 
             // save in a global context
             map.features = shapes.features;
