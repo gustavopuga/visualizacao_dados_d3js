@@ -87,7 +87,6 @@
                 .style("stroke", "black");
             d3.select(this)
                 .append('text')
-                .style('font-size', d => fontScale(d.properties.population))
                 .text(d.properties.uf);
         }
 
