@@ -57,7 +57,7 @@
         // add data to properties
         map.features.forEach(function(d) {
             const entry = thematic.filter(t => t.cod_ibge == d.properties.codigo_ibg)[0];
-            if(entry1) {
+            if(entry) {
                 d.properties.population = entry.population;
             }
         })
