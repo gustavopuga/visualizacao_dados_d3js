@@ -47,7 +47,7 @@
                 deaths: +row.obitos
             }
         }),
-        d3.csv('../Data/estados_br_pop.csv', function(row) {
+        d3.csv('https://raw.githubusercontent.com/PacktPublishing/Learn-D3.js/master/Chapter11/Data/estados_br_pop.csv', function(row) {
             return {
                 cod_ibge: +row.cod_ibge,
                 population: +row.populacao
