@@ -22,64 +22,89 @@
 
     <script>
 
-    const width = 960;
-    const height = 500;
+        const width = 960;
+        const height = 500;
 
-    const svg = d3.select("#chart").append("svg")
+        const svg = d3.select("#chart").append("svg")
             .attr("width", width).attr("height", height);
 
-    // choose a projection
-    const projection = d3.geoMercator();
+        // choose a projection
+        const projection = d3.geoMercator();
 
-    // create a path generator function for the projection
-    const geoPath = d3.geoPath()
+        // create a path generator function for the projection
+        const geoPath = d3.geoPath()
             .projection(projection);
 
-    const colorScale = d3.scaleSqrt(["hsla(240,100%,50%,.1)", "red"]);
+        const colorScale = d3.scaleSqrt(["hsla(240,100%,50%,.1)", "red"]);
 
-    const map = {};
+        const map = {};
 
-    Promise.all([
-        d3.json('https://raw.githubusercontent.com/PacktPublishing/Learn-D3.js/master/Chapter11/Data/estados_br.geojson'),
-        d3.csv('https://raw.githubusercontent.com/PacktPublishing/Learn-D3.js/master/Chapter11/Data/estados_br_pop.csv', function(row) {
-            return {
-                cod_ibge: +row.cod_ibge,
-                population: +row.populacao
-            }
-        })
-    ]).then(function([shapes, thematic]) {
-        console.log(shapes);   // shape data
-        console.log(thematic); // population data
+        Promise.all([
+            d3.json('https://raw.githubusercontent.com/PacktPublishing/Learn-D3.js/master/Chapter11/Data/estados_br.geojson'),
+            d3.csv('https://raw.githubusercontent.com/PacktPublishing/Learn-D3.js/master/Chapter11/Data/estados_br_pop.csv', function (row) {
+                return {
+                    cod_ibge: +row.cod_ibge,
+                    population: +row.populacao
+                }
+            })
+        ]).then(function ([shapes, thematic]) {
+            console.log(shapes);   // shape data
+            console.log(thematic); // population data
 
-        // save in a global context
-        map.features   = shapes.features;
+            // save in a global context
+            map.features = shapes.features;
 
-        // add data to properties
-        map.features.forEach(function(d) {
-            const entry = thematic.filter(t => t.cod_ibge == d.properties.codigo_ibg)[0];
-            if(entry) {
-                d.properties.population = entry.population;
-            }
-        })
+            // add data to properties
+            map.features.forEach(function (d) {
+                const entry = thematic.filter(t => t.cod_ibge == d.properties.codigo_ibg)[0];
+                if (entry) {
+                    d.properties.population = entry.population;
+                }
+            })
 
-        projection.fitSize([width, height], shapes);
+            projection.fitSize([width, height], shapes);
 
-        // configure the scale
-        colorScale.domain(d3.extent(map.features, d => d.properties.population))
-        draw();
-    });
+            // configure the scale
+            colorScale.domain(d3.extent(map.features, d => d.properties.population))
+            draw();
+        });
 
-    function draw() {
-        svg.selectAll("path.country")
-            .data(map.features)
-            .enter()
-            .append("path")
-            .attr("class","country")
-            .attr('d', geoPath)
-            .style("fill", d => colorScale(d.properties.population))
-    }
+        let mouseOver = function (d) {
+            d3.selectAll(".country")
+                .transition()
+                .duration(200)
+                .style("opacity", .5)
+            d3.select(this)
+                .transition()
+                .duration(200)
+                .style("opacity", 1)
+                .style("stroke", "black")
+        }
 
-</script>
+        let mouseLeave = function (d) {
+            d3.selectAll(".country")
+                .transition()
+                .duration(200)
+                .style("opacity", .8)
+            d3.select(this)
+                .transition()
+                .duration(200)
+                .style("stroke", "transparent")
+        }
+
+        function draw() {
+            svg.selectAll("path.country")
+                .data(map.features)
+                .enter()
+                .append("path")
+                .attr("class", "country")
+                .attr('d', geoPath)
+                .style("fill", d => colorScale(d.properties.population))
+                .on("mouseover", mouseOver)
+                .on("mouseleave", mouseLeave)
+        }
+
+    </script>
 
     </script>
 
