@@ -45,8 +45,8 @@
         
         // Lendo geojson e csv com as informações sobre a população e código do ibge
         Promise.all([
-            d3.json('https://raw.githubusercontent.com/PacktPublishing/Learn-D3.js/master/Chapter11/Data/estados_br.geojson'),
-            d3.csv('https://raw.githubusercontent.com/PacktPublishing/Learn-D3.js/master/Chapter11/Data/estados_br_pop.csv', function (row) {
+            d3.json('https://raw.githubusercontent.com/gustavopuga/visualizacao_dados_d3js/master/datasets/estados_br.geojson'),
+            d3.csv('https://raw.githubusercontent.com/gustavopuga/visualizacao_dados_d3js/master/datasets/estados_br_pop.csv', function (row) {
                 return {
                     cod_ibge: +row.cod_ibge,
                     population: +row.populacao,
