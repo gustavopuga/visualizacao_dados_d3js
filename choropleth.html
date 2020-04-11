@@ -118,12 +118,12 @@
             d3.selectAll(".state")
                 .transition()
                 .duration(200)
-                .style("opacity", .8);
+                .style("opacity", .5);
 
             d3.select(this)
                 .transition()
                 .duration(200)
-                .style("stroke", "transparent");
+                .style("stroke", "gray");
 
             d3.select("#tooltip").style("opacity", 0);
         }
