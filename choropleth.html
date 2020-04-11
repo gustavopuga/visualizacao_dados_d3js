@@ -66,8 +66,7 @@
             d3.csv('https://raw.githubusercontent.com/gustavopuga/visualizacao_dados_d3js/master/datasets/estados_br_pop.csv', function (row) {
                 return {
                     cod_ibge: +row.cod_ibge,
-                    population: +row.populacao,
-                    uf: row.uf
+                    population: +row.populacao
                 }
             })
         ]).then(function ([shapes, thematic]) {
@@ -81,7 +80,6 @@
                 const entry = thematic.filter(t => t.cod_ibge == d.properties.codigo_ibg)[0];
                 if (entry) {
                     d.properties.population = entry.population;
-                    d.properties.uf = entry.uf;
                 }
             })
 
@@ -112,7 +110,7 @@
             tooltip.select("text:first-of-type")
                 .text(d.properties.name)
             tooltip.select("text:last-child")
-                .text(d.properties.uf);
+                .text("População: " + d.properties.population;
         }
 
         let mouseLeave = function (d) {
