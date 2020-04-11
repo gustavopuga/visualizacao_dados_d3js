@@ -90,6 +90,7 @@
             // configure the scale
             colorScale.domain(d3.extent(map.features, d => d.properties.population));
             draw();
+            drawTooltips();
         });
 
         let mouseOver = function (d, i) {
