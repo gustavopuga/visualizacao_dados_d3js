@@ -112,7 +112,7 @@
                 .style("font-weight", "bold")
                 .text(d.properties.name)
             tooltip.select("text:last-child")
-                .text("População: " + d.properties.population);
+                .text("População: " + d3.format(".2s")(d.properties.population));
         }
 
         let mouseLeave = function (d) {
