@@ -43,50 +43,6 @@
                     .attr("d", geoPath);
             });
 
-        function draw() {
-            svg.append("path")
-                .datum({ type: "Sphere" })
-                .style('fill', '#345474')
-                .attr("d", geoPath);
-
-            svg.selectAll("g.contours")
-                .data(map.features)
-                .enter()
-                .append("g")
-                .attr("class", "contours")
-                .style("fill", (d, i) => color(i))
-                .append("path")
-                .attr('d', geoPath)
-                .style("stroke", (d, i) => d3.rgb(linecolor(i)).darker())
-                .style("fill-opacity", .03)
-                .style("stroke-opacity", .2)
-                .style('stroke-width', '.25');
-        }
-
-        function drawGraticules() {
-            svg.append("path").attr("class", "equator")
-                .datum(d3.geoCircle().center([0, 90]))
-                .attr('d', geoPath)
-                .style("stroke", "orange")
-                .style("fill", "none")
-                .style('stroke-width', 3)
-                .style('stroke-opacity', .2);
-            svg.append("path").attr("class", "equator")
-                .datum(d3.geoCircle().center([0, -90]))
-                .attr('d', geoPath)
-                .style("stroke", "orange")
-                .style("fill", "none")
-                .style('stroke-width', 3)
-                .style('stroke-opacity', .2);
-            svg.append("g").attr("class", "graticule")
-                .datum(d3.geoGraticule10())
-                .style("fill", 'none')
-                .append("path")
-                .attr('d', geoPath)
-                .style("stroke", "white")
-                .style('stroke-width', '.25');
-        }
-
     </script>
 
 </body>
