@@ -96,7 +96,7 @@
             d3.selectAll(".state")
                 .transition()
                 .duration(200)
-                .style("stroke", "gray")
+                .style("stroke", "transparent")
                 .style("opacity", .5);
 
             d3.select(this)
@@ -109,7 +109,7 @@
                 .attr("transform", `translate(${[d3.event.x, d3.event.y]})`)
                 .style("opacity", 1);
             tooltip.select("text:first-of-type")
-                .text("<strong>" + d.properties.name + "</strong>")
+                .text(d.properties.name)
             tooltip.select("text:last-child")
                 .text("População: " + d.properties.population);
         }
@@ -119,12 +119,12 @@
             d3.selectAll(".state")
                 .transition()
                 .duration(200)
-                .style("opacity", .5);
+                .style("opacity", .8);
 
             d3.select(this)
                 .transition()
                 .duration(200)
-                .style("stroke", "gray");
+                .style("stroke", "transparent");
 
             d3.select("#tooltip").style("opacity", 0);
         }
