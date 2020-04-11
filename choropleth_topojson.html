@@ -22,40 +22,25 @@
 
     <script>
 
+        const color = d3.scaleOrdinal(d3.schemeCategory10);
         const width = 960;
-        const height = 500;
-        const key = "mars";
+        const height = 700;
 
-        const svg = d3.select("body").append("svg")
+        const svg = d3.select("#chart").append("svg")
             .attr("width", width).attr("height", height);
 
-        // choose a projection
-        const projection = d3.geoOrthographic()
-            .rotate([90, 20, 25]);
-
-        const color = d3.scaleSequentialLog(d3.interpolateOranges);
-        const linecolor = d3.scaleSequentialLog(d3.interpolateGreys);
-
-        // create a path generator function for the projection
-        const geoPath = d3.geoPath()
-            .projection(projection);
-
-        const map = {};
+        const geoPath = d3.geoPath().projection(d3.geoMercator()).pointRadius(3);
 
         d3.json('https://raw.githubusercontent.com/gustavopuga/visualizacao_dados_d3js/master/datasets/estados_br.topojson')
-            .then(function (topology) {
-                console.log(topology); // TopoJSON topology
+            .then(function (data) {
 
-                map.topology = topology.objects[key];
-                map.geometries = map.topology.geometries;
-                map.features = topojson.feature(topology, map.topology).features;
+                const geodata = topojson.feature(data);
 
-                color.domain([0, map.features.length])
-                linecolor.domain([0, map.features.length])
-
-                draw();
-                drawGraticules();
-
+                svg.selectAll("path.country")
+                    .data(geodata.features).enter()
+                    .append("path").attr("class", "country")
+                    .style("fill", (d, i) => color(i))
+                    .attr("d", geoPath);
             });
 
         function draw() {
