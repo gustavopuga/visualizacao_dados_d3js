@@ -109,6 +109,7 @@
                 .attr("transform", `translate(${[d3.event.x, d3.event.y]})`)
                 .style("opacity", 1);
             tooltip.select("text:first-of-type")
+                .style("font-weight", "bold")
                 .text(d.properties.name)
             tooltip.select("text:last-child")
                 .text("População: " + d.properties.population);
