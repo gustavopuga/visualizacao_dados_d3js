@@ -24,3 +24,6 @@ Esta página armazena as atividades desenvolvida durante o curso de Visualizaç�
 
 ## Tarefa 8: Choropleth
 [Clique aqui para visualizar](https://gustavopuga.github.io/visualizacao_dados_d3js/choropleth.html)
+
+## Tarefa 9: Cartograma
+[Clique aqui para visualizar](https://gustavopuga.github.io/visualizacao_dados_d3js/cartogram.html)
