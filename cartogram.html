@@ -23,7 +23,7 @@
             .valFormatter(n => n.toPrecision(3))
             (document.getElementById('brazil'));
     
-        d3.json('https://raw.githubusercontent.com/gustavopuga/visualizacao_dados_d3js/master/datasets/estados_br.topojson', (error, brazil) => {
+        d3.json('https://raw.githubusercontent.com/gustavopuga/visualizacao_dados_d3js/master/json/estados_br.json', (error, brazil) => {
             if (error) throw error;
     
             // exclude antarctica
