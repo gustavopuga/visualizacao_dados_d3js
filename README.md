@@ -22,8 +22,17 @@ Esta página armazena as atividades desenvolvida durante o curso de Visualizaç�
 ## Tarefa 7: Multiplas linhas
 [Clique aqui para visualizar](https://gustavopuga.github.io/visualizacao_dados_d3js/multi_line_chart.html)
 
-## Tarefa 8: Choropleth
+## Tarefa 8 v1: Choropleth GEOJSON
 [Clique aqui para visualizar](https://gustavopuga.github.io/visualizacao_dados_d3js/choropleth.html)
+
+## Tarefa 8 v2: Choropleth TOPOJSON
+[Clique aqui para visualizar](https://gustavopuga.github.io/visualizacao_dados_d3js/choropleth_topojson.html)
 
 ## Tarefa 9: Cartograma
 [Clique aqui para visualizar](https://gustavopuga.github.io/visualizacao_dados_d3js/cartogram.html)
+
+## Tarefa 10: Cartograma Animado
+[Clique aqui para visualizar](https://gustavopuga.github.io/visualizacao_dados_d3js/cartogram_animated.html)
+
+## Tarefa 11: Palavras
+[Clique aqui para visualizar](https://gustavopuga.github.io/visualizacao_dados_d3js/words.html)
