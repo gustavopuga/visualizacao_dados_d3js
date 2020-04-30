@@ -24,7 +24,7 @@
             height = 445 - margin.top - margin.bottom;
 
         // append the svg object to the body of the page
-        var svg = d3.select("#my_dataviz")
+        var svg = d3.select("#graph")
             .append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
@@ -33,11 +33,11 @@
                 "translate(" + margin.left + "," + margin.top + ")");
 
         // read csv data
-        d3.csv("https://raw.githubusercontent.com/gustavopuga/visualizacao_dados_d3js/master/datasets/corona.csv").then(function (data) {
+        d3.json("https://raw.githubusercontent.com/gustavopuga/visualizacao_dados_d3js/master/datasets/corona.json").then(function (data) {
 
             // Give the data to this cluster layout:
-            var root = d3.hierarchy(data).sum(function (d) { return d.value }) // Here the size of each leave is given in the 'value' field in input data
-
+            var root = d3.hierarchy(data).sum(function (d) { return d }) // Here the size of each leave is given in the 'value' field in input data
+console.info(root);
             // Then d3.treemap computes the position of each element of the hierarchy
             d3.treemap()
                 .size([width, height])
@@ -69,8 +69,8 @@
                 .attr('width', function (d) { return d.x1 - d.x0; })
                 .attr('height', function (d) { return d.y1 - d.y0; })
                 .style("stroke", "black")
-                .style("fill", function (d) { return color(d.parent.data.name) })
-                .style("opacity", function (d) { return opacity(d.data.value) })
+                .style("fill", function (d) { console.info (d.data); return color(d.parent.data.estado) })
+                .style("opacity", function (d) { return 1 })
 
             // and to add the text labels
             svg
@@ -80,7 +80,7 @@
                 .append("text")
                 .attr("x", function (d) { return d.x0 + 5 })    // +10 to adjust position (more right)
                 .attr("y", function (d) { return d.y0 + 20 })    // +20 to adjust position (lower)
-                .text(function (d) { return d.data.name.replace('mister_', '') })
+                .text(function (d) { return d.data.estado })
                 .attr("font-size", "19px")
                 .attr("fill", "white")
 
@@ -92,20 +92,20 @@
                 .append("text")
                 .attr("x", function (d) { return d.x0 + 5 })    // +10 to adjust position (more right)
                 .attr("y", function (d) { return d.y0 + 35 })    // +20 to adjust position (lower)
-                .text(function (d) { return d.data.value })
+                .text(function (d) { return d.data.casosAcumulados })
                 .attr("font-size", "11px")
                 .attr("fill", "white")
 
             // Add title for the 3 groups
-            svg
-                .selectAll("titles")
-                .data(root.descendants().filter(function (d) { return d.depth == 1 }))
-                .enter()
-                .append("text")
-                .attr("x", function (d) { return d.x0 })
-                .attr("y", function (d) { return d.y0 + 21 })
-                .text(function (d) { return d.data.name })
-                .attr("font-size", "19px")
+            // svg
+            //     .selectAll("titles")
+            //     .data(root.descendants().filter(function (d) { return d.depth == 1 }))
+            //     .enter()
+            //     .append("text")
+            //     .attr("x", function (d) { return d.x0 })
+            //     .attr("y", function (d) { return d.y0 + 21 })
+            //     .text(function (d) { console.info(d); return d.data.name })
+            //     .attr("font-size", "19px")
                 .attr("fill", function (d) { return color(d.data.name) })
 
             // Add title for the 3 groups
