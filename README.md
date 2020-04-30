@@ -36,3 +36,6 @@ Esta página armazena as atividades desenvolvida durante o curso de Visualizaç�
 
 ## Tarefa 11: Palavras
 [Clique aqui para visualizar](https://gustavopuga.github.io/visualizacao_dados_d3js/words.html)
+
+## Tarefa 12: TreeMap
+[Clique aqui para visualizar](https://gustavopuga.github.io/visualizacao_dados_d3js/tree.html)
