@@ -1,0 +1,147 @@
+{
+   "Norte": [
+      {
+         "estado": "RO",
+         "data": "29/04/2020",
+         "casosAcumulados": 433
+      },
+      {
+         "estado": "AC",
+         "data": "29/04/2020",
+         "casosAcumulados": 354
+      },
+      {
+         "estado": "AM",
+         "data": "29/04/2020",
+         "casosAcumulados": 4801
+      },
+      {
+         "estado": "RR",
+         "data": "29/04/2020",
+         "casosAcumulados": 452
+      },
+      {
+         "estado": "PA",
+         "data": "29/04/2020",
+         "casosAcumulados": 2422
+      },
+      {
+         "estado": "AP",
+         "data": "29/04/2020",
+         "casosAcumulados": 1016
+      },
+      {
+         "estado": "TO",
+         "data": "29/04/2020",
+         "casosAcumulados": 116
+      }
+   ],
+   "Nordeste": [
+      {
+         "estado": "MA",
+         "data": "29/04/2020",
+         "casosAcumulados": 2804
+      },
+      {
+         "estado": "PI",
+         "data": "29/04/2020",
+         "casosAcumulados": 454
+      },
+      {
+         "estado": "CE",
+         "data": "29/04/2020",
+         "casosAcumulados": 7267
+      },
+      {
+         "estado": "RN",
+         "data": "29/04/2020",
+         "casosAcumulados": 1086
+      },
+      {
+         "estado": "PB",
+         "data": "29/04/2020",
+         "casosAcumulados": 699
+      },
+      {
+         "estado": "PE",
+         "data": "29/04/2020",
+         "casosAcumulados": 6194
+      },
+      {
+         "estado": "AL",
+         "data": "29/04/2020",
+         "casosAcumulados": 957
+      },
+      {
+         "estado": "SE",
+         "data": "29/04/2020",
+         "casosAcumulados": 337
+      },
+      {
+         "estado": "BA",
+         "data": "29/04/2020",
+         "casosAcumulados": 2646
+      }
+   ],
+   "Sudeste": [
+      {
+         "estado": "MG",
+         "data": "29/04/2020",
+         "casosAcumulados": 1758
+      },
+      {
+         "estado": "ES",
+         "data": "29/04/2020",
+         "casosAcumulados": 2107
+      },
+      {
+         "estado": "RJ",
+         "data": "29/04/2020",
+         "casosAcumulados": 8869
+      },
+      {
+         "estado": "SP",
+         "data": "29/04/2020",
+         "casosAcumulados": 26158
+      }
+   ],
+   "Sul": [
+      {
+         "estado": "PR",
+         "data": "29/04/2020",
+         "casosAcumulados": 1348
+      },
+      {
+         "estado": "SC",
+         "data": "29/04/2020",
+         "casosAcumulados": 1995
+      },
+      {
+         "estado": "RS",
+         "data": "29/04/2020",
+         "casosAcumulados": 1368
+      }
+   ],
+   "Centro-Oeste": [
+      {
+         "estado": "MS",
+         "data": "29/04/2020",
+         "casosAcumulados": 249
+      },
+      {
+         "estado": "MT",
+         "data": "29/04/2020",
+         "casosAcumulados": 292
+      },
+      {
+         "estado": "GO",
+         "data": "29/04/2020",
+         "casosAcumulados": 705
+      },
+      {
+         "estado": "DF",
+         "data": "29/04/2020",
+         "casosAcumulados": 1275
+      }
+   ]
+}
