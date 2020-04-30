@@ -1,0 +1,197 @@
+{
+    "children": [
+        {
+            "name": "Norte",
+            "children": [
+                {
+                    "name": "RO",
+                    "group": "A",
+                    "value": 433,
+                    "colname": "level3"
+                 },
+                 {
+                    "name": "AC",
+                    "group": "A",
+                    "value": 354,
+                    "colname": "level3"
+                 },
+                 {
+                    "name": "AM",
+                    "group": "A",
+                    "value": 4801,
+                    "colname": "level3"
+                 },
+                 {
+                    "name": "RR",
+                    "group": "A",
+                    "value": 452,
+                    "colname": "level3"
+                 },
+                 {
+                    "name": "PA",
+                    "group": "A",
+                    "value": 2422,
+                    "colname": "level3"
+                 },
+                 {
+                    "name": "AP",
+                    "group": "A",
+                    "value": 1016,
+                    "colname": "level3"
+                 },
+                 {
+                    "name": "TO",
+                    "group": "A",
+                    "value": 116,
+                    "colname": "level3"
+                 }
+            ],
+            "colname": "level2"
+        },
+        {
+            "name": "Nordeste",
+            "children": [
+                {
+                    "name": "MA",
+                    "group": "B",
+                    "value": 2804,
+                    "colname": "level3"
+                 },
+                 {
+                    "name": "PI",
+                    "group": "B",
+                    "value": 454,
+                    "colname": "level3"
+                 },
+                 {
+                    "name": "CE",
+                    "group": "B",
+                    "value": 7267,
+                    "colname": "level3"
+                 },
+                 {
+                    "name": "RN",
+                    "group": "B",
+                    "value": 1086,
+                    "colname": "level3"
+                 },
+                 {
+                    "name": "PB",
+                    "group": "B",
+                    "value": 699,
+                    "colname": "level3"
+                 },
+                 {
+                    "name": "PE",
+                    "group": "B",
+                    "value": 6194,
+                    "colname": "level3"
+                 },
+                 {
+                    "name": "AL",
+                    "group": "B",
+                    "value": 957,
+                    "colname": "level3"
+                 },
+                 {
+                    "name": "SE",
+                    "group": "B",
+                    "value": 337,
+                    "colname": "level3"
+                 },
+                 {
+                    "name": "BA",
+                    "group": "B",
+                    "value": 2646,
+                    "colname": "level3"
+                 }
+              ],
+            "colname": "level2"
+        },
+        {
+            "name": "Sudeste",
+            "children": [
+                {
+                    "name": "MG",
+                    "group": "C",
+                    "value": 1758,
+                    "colname": "level3"
+                 },
+                 {
+                    "name": "ES",
+                    "group": "C",
+                    "value": 2107,
+                    "colname": "level3"
+                 },
+                 {
+                    "name": "RJ",
+                    "group": "C",
+                    "value": 8869,
+                    "colname": "level3"
+                 },
+                 {
+                    "name": "SP",
+                    "group": "C",
+                    "value": 26158,
+                    "colname": "level3"
+                 }
+            ],
+            "colname": "level2"
+        },
+        {
+            "name": "Sul",
+            "children": [
+                {
+                    "name": "PR",
+                    "group": "D",
+                    "value": 1348,
+                    "colname": "level3"
+                 },
+                 {
+                    "name": "SC",
+                    "group": "D",
+                    "value": 1995,
+                    "colname": "level3"
+                 },
+                 {
+                    "name": "RS",
+                    "group": "D",
+                    "value": 1368,
+                    "colname": "level3"
+                 }
+            ],
+            "colname": "level2"
+        },
+        {
+            "name": "Centro-Oeste",
+            "children": [
+                {
+                    "name": "MS",
+                    "data": "E",
+                    "value": 249,
+                    "colname": "level3"
+                 },
+                 {
+                    "name": "MT",
+                    "data": "E",
+                    "value": 292,
+                    "colname": "level3"
+                 },
+                 {
+                    "name": "GO",
+                    "data": "E",
+                    "value": 705,
+                    "colname": "level3"
+                 },
+                 {
+                    "name": "DF",
+                    "data": "E",
+                    "value": 1275,
+                    "colname": "level3"
+                 }
+            ],
+            "colname": "level2"
+        }
+    ],
+    "name": "CEO"
+}
