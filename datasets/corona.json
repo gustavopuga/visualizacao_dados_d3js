@@ -1,4 +1,4 @@
-{ 
+{"regiao":[{
    "Norte": [
       {
          "estado": "RO",
@@ -144,4 +144,5 @@
          "casosAcumulados": 1275
       }
    ]
+}]
 }
