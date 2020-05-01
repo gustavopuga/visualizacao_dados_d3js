@@ -2,49 +2,35 @@
 <!-- https://github.com/GuanglinDu/sunburst-d3-v5/blob/master/index2.html -->
 <head>
     <meta charset="utf-8">
-    <title>Teste Sunburst</title>
+    <title>Laboratório Sunburst</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.15.0/d3.min.js"></script>
-    
-    <style>
-        body {
-            margin: 0;
-            position: fixed;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-        }
-
-        text {
-            font: 10px sans-serif;
-            text-anchor: middle;
-        }
-
-        div#container {
-            height: 1000px;
-            width: 1200px;
-            border: 2px solid #000;
-            overflow: scroll;
-        }
-
-        svg#partitionSVG {
-            height: 600px;
-            width: 600px;
-            border: 1px dotted #ccc;
-            background-color: white;
-        }
-    </style>
 </head>
 
 <body>
 
-    <div id="container">
-        <svg id="partitionSVG" viewBox="0 0 932 932"></svg>
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col justify-content-md-center">
+                <h1>Laboratório Sunburst</h1>
+                <h5 style="color: gray;">Casos Acumulado de COVID - 19 (29/04/2020)</h5>
+                <p>Passe o mouse sobre os setores para visualizar os valores, clique nele para expandir a seleção. Para voltar clique no meio.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 align-self-md-center">
+                <svg id="partitionSVG" viewBox="0 0 932 932"></svg>
+            </div>
+        </div>
+    </div>
+        
     </div>
 
     <script>
         const format = d3.format(",d");
-        const width = 600;
+        const width = 580;
         const radius = width / 6;
 
         const arc = d3.arc()
