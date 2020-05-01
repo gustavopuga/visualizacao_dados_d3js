@@ -1,52 +1,38 @@
 {
+    "name": "Brasil",
     "children": [
         {
             "name": "Norte",
             "children": [
                 {
                     "name": "RO",
-                    "group": "A",
-                    "value": 433,
-                    "colname": "level3"
+                    "size": 433
                  },
                  {
                     "name": "AC",
-                    "group": "A",
-                    "value": 354,
-                    "colname": "level3"
+                    "size": 354
                  },
                  {
                     "name": "AM",
-                    "group": "A",
-                    "value": 4801,
-                    "colname": "level3"
+                    "size": 4801
                  },
                  {
                     "name": "RR",
-                    "group": "A",
-                    "value": 452,
-                    "colname": "level3"
+                    "size": 452
                  },
                  {
                     "name": "PA",
-                    "group": "A",
-                    "value": 2422,
-                    "colname": "level3"
+                    "size": 2422
                  },
                  {
                     "name": "AP",
-                    "group": "A",
-                    "value": 1016,
-                    "colname": "level3"
+                    "size": 1016
                  },
                  {
                     "name": "TO",
-                    "group": "A",
-                    "value": 116,
-                    "colname": "level3"
+                    "size": 116
                  }
-            ],
-            "colname": "level2"
+            ]
         },
         {
             "name": "Nordeste",
@@ -54,59 +40,49 @@
                 {
                     "name": "MA",
                     "group": "B",
-                    "value": 2804,
-                    "colname": "level3"
+                    "size": 2804
                  },
                  {
                     "name": "PI",
                     "group": "B",
-                    "value": 454,
-                    "colname": "level3"
+                    "size": 454
                  },
                  {
                     "name": "CE",
                     "group": "B",
-                    "value": 7267,
-                    "colname": "level3"
+                    "size": 7267
                  },
                  {
                     "name": "RN",
                     "group": "B",
-                    "value": 1086,
-                    "colname": "level3"
+                    "size": 1086
                  },
                  {
                     "name": "PB",
                     "group": "B",
-                    "value": 699,
-                    "colname": "level3"
+                    "size": 699
                  },
                  {
                     "name": "PE",
                     "group": "B",
-                    "value": 6194,
-                    "colname": "level3"
+                    "size": 6194
                  },
                  {
                     "name": "AL",
                     "group": "B",
-                    "value": 957,
-                    "colname": "level3"
+                    "size": 957
                  },
                  {
                     "name": "SE",
                     "group": "B",
-                    "value": 337,
-                    "colname": "level3"
+                    "size": 337
                  },
                  {
                     "name": "BA",
                     "group": "B",
-                    "value": 2646,
-                    "colname": "level3"
+                    "size": 2646
                  }
-              ],
-            "colname": "level2"
+              ]
         },
         {
             "name": "Sudeste",
@@ -114,29 +90,24 @@
                 {
                     "name": "MG",
                     "group": "C",
-                    "value": 1758,
-                    "colname": "level3"
+                    "size": 1758
                  },
                  {
                     "name": "ES",
                     "group": "C",
-                    "value": 2107,
-                    "colname": "level3"
+                    "size": 2107
                  },
                  {
                     "name": "RJ",
                     "group": "C",
-                    "value": 8869,
-                    "colname": "level3"
+                    "size": 8869
                  },
                  {
                     "name": "SP",
                     "group": "C",
-                    "value": 26158,
-                    "colname": "level3"
+                    "size": 26158
                  }
-            ],
-            "colname": "level2"
+            ]
         },
         {
             "name": "Sul",
@@ -144,23 +115,19 @@
                 {
                     "name": "PR",
                     "group": "D",
-                    "value": 1348,
-                    "colname": "level3"
+                    "size": 1348
                  },
                  {
                     "name": "SC",
                     "group": "D",
-                    "value": 1995,
-                    "colname": "level3"
+                    "size": 1995
                  },
                  {
                     "name": "RS",
                     "group": "D",
-                    "value": 1368,
-                    "colname": "level3"
+                    "size": 1368
                  }
-            ],
-            "colname": "level2"
+            ]
         },
         {
             "name": "Centro-Oeste",
@@ -168,29 +135,24 @@
                 {
                     "name": "MS",
                     "data": "E",
-                    "value": 249,
-                    "colname": "level3"
+                    "size": 249
                  },
                  {
                     "name": "MT",
                     "data": "E",
-                    "value": 292,
-                    "colname": "level3"
+                    "size": 292
                  },
                  {
                     "name": "GO",
                     "data": "E",
-                    "value": 705,
-                    "colname": "level3"
+                    "size": 705
                  },
                  {
                     "name": "DF",
                     "data": "E",
-                    "value": 1275,
-                    "colname": "level3"
+                    "size": 1275
                  }
-            ],
-            "colname": "level2"
+            ]
         }
     ]
 }
