@@ -17,11 +17,10 @@
 
     <script>
 
-
         // set the dimensions and margins of the graph
         var margin = { top: 10, right: 10, bottom: 10, left: 10 },
-            width = 445 - margin.left - margin.right,
-            height = 445 - margin.top - margin.bottom;
+            width = 1450 - margin.left - margin.right,
+            height = 750 - margin.top - margin.bottom;
 
         // append the svg object to the body of the page
         var svg = d3.select("#graph")
@@ -32,12 +31,12 @@
             .attr("transform",
                 "translate(" + margin.left + "," + margin.top + ")");
 
-        // read csv data
-        d3.json("https://raw.githubusercontent.com/gustavopuga/visualizacao_dados_d3js/master/datasets/corona.json").then(function (data) {
+        // read json data
+        d3.json("https://raw.githubusercontent.com/gustavopuga/visualizacao_dados_d3js/master/json/corona.json").then(function (data) {
 
             // Give the data to this cluster layout:
-            var root = d3.hierarchy(data).sum(function (d) { return d }) // Here the size of each leave is given in the 'value' field in input data
-console.info(root);
+            var root = d3.hierarchy(data).sum(function (d) { return d.value }) // Here the size of each leave is given in the 'value' field in input data
+            
             // Then d3.treemap computes the position of each element of the hierarchy
             d3.treemap()
                 .size([width, height])
@@ -55,8 +54,8 @@ console.info(root);
 
             // And a opacity scale
             var opacity = d3.scaleLinear()
-                .domain([10, 30])
-                .range([.5, 1])
+                .domain([0, 500, 1000, 1500, 2000])
+                .range([.1, .35, .5, .75, 1])
 
             // use this information to add rectangles:
             svg
@@ -69,8 +68,8 @@ console.info(root);
                 .attr('width', function (d) { return d.x1 - d.x0; })
                 .attr('height', function (d) { return d.y1 - d.y0; })
                 .style("stroke", "black")
-                .style("fill", function (d) { console.info (d.data); return color(d.parent.data.estado) })
-                .style("opacity", function (d) { return 1 })
+                .style("fill", function (d) { return color(d.parent.data.name) })
+                .style("opacity", function (d) { return opacity(d.data.value) })
 
             // and to add the text labels
             svg
@@ -80,7 +79,7 @@ console.info(root);
                 .append("text")
                 .attr("x", function (d) { return d.x0 + 5 })    // +10 to adjust position (more right)
                 .attr("y", function (d) { return d.y0 + 20 })    // +20 to adjust position (lower)
-                .text(function (d) { return d.data.estado })
+                .text(function (d) { return d.data.name.replace('mister_', '') })
                 .attr("font-size", "19px")
                 .attr("fill", "white")
 
@@ -92,20 +91,20 @@ console.info(root);
                 .append("text")
                 .attr("x", function (d) { return d.x0 + 5 })    // +10 to adjust position (more right)
                 .attr("y", function (d) { return d.y0 + 35 })    // +20 to adjust position (lower)
-                .text(function (d) { return d.data.casosAcumulados })
+                .text(function (d) { return d.data.value })
                 .attr("font-size", "11px")
                 .attr("fill", "white")
 
             // Add title for the 3 groups
-            // svg
-            //     .selectAll("titles")
-            //     .data(root.descendants().filter(function (d) { return d.depth == 1 }))
-            //     .enter()
-            //     .append("text")
-            //     .attr("x", function (d) { return d.x0 })
-            //     .attr("y", function (d) { return d.y0 + 21 })
-            //     .text(function (d) { console.info(d); return d.data.name })
-            //     .attr("font-size", "19px")
+            svg
+                .selectAll("titles")
+                .data(root.descendants().filter(function (d) { return d.depth == 1 }))
+                .enter()
+                .append("text")
+                .attr("x", function (d) { return d.x0 })
+                .attr("y", function (d) { return d.y0 + 21 })
+                .text(function (d) { return d.data.name })
+                .attr("font-size", "19px")
                 .attr("fill", function (d) { return color(d.data.name) })
 
             // Add title for the 3 groups
@@ -113,10 +112,9 @@ console.info(root);
                 .append("text")
                 .attr("x", 0)
                 .attr("y", 14)    // +20 to adjust position (lower)
-                .text("Three group leaders and 14 employees")
+                .text("Casos Acumulado de COVID - 19")
                 .attr("font-size", "19px")
                 .attr("fill", "grey")
-
         })
 
     </script>
