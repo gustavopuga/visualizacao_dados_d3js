@@ -1,101 +1,185 @@
-<!-- BASED ON https://www.d3-graph-gallery.com/ -->
+<!-- BASED ON https://bl.ocks.org/curran/3f2ff2e32652397de94d406460e240ce -->
 <!DOCTYPE html>
 <html>
 
 <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <style>
+        .domain {
+            display: none;
+        }
+
+        .tick line {
+            stroke: #C0C0BB;
+        }
+
+        .tick text {
+            fill: #8E8883;
+            font-size: 10pt;
+            font-family: sans-serif;
+        }
+
+        .axis-label {
+            fill: #635F5D;
+            font-size: 30pt;
+            font-family: sans-serif;
+        }
     </style>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.15.0/d3.min.js"></script>
-    <title>Teste Dispersão</title>
+    <title>Laboratório Dispersão</title>
 </head>
 
 <body>
 
-    <h1>Teste histograma</h1>
-    <p id="graph"></p>
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col justify-content-md-center">
+                <h1>Laboratório Dispersão</h1>
+                <h5 style="color: gray;">Casos de COVID - 19 em SP (01/05/2020)</h5>
+                <p>Aplicando gráfico de dispersão para série temporal.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div id="chart" class="col-md-12 align-self-md-center">
+                <svg width="1024" height="720"></svg>
+            </div>
+        </div>
+    </div>
 
     <script>
 
+        var localized = d3.timeFormatDefaultLocale({
+            "decimal": ",",
+            "thousands": ".",
+            "grouping": [3],
+            "currency": ["R$", ""],
+            "dateTime": "%d/%m/%Y %H:%M:%S",
+            "date": "%d/%m/%Y",
+            "time": "%H:%M:%S",
+            "periods": ["AM", "PM"],
+            "days": ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"],
+            "shortDays": ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"],
+            "months": ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
+            "shortMonths": ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"]
+        });
+
+        var parseDate = d3.timeParse("%d/%m/%Y");
+        var timeFormat = d3.timeFormat("%d/%m/%Y");
         // set the dimensions and margins of the graph
-        var margin = { top: 10, right: 30, bottom: 40, left: 50 },
-            width = 520 - margin.left - margin.right,
-            height = 520 - margin.top - margin.bottom;
+        const xValue = d => d.data;
+        const xLabel = 'Dias';
+        const yValue = d => d.casosNovos;
+        const yLabel = 'Casos Novos';
+        const margin = { left: 120, right: 30, top: 20, bottom: 120 };
 
-        // append the svg object to the body of the page
-        var svg = d3.select("#graph")
-            .append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-            .attr("transform",
-                "translate(" + margin.left + "," + margin.top + ")")
+        const svg = d3.select('svg');
+        const width = svg.attr('width');
+        const height = svg.attr('height');
+        const innerWidth = width - margin.left - margin.right;
+        const innerHeight = height - margin.top - margin.bottom;
 
-        // Add the grey background that makes ggplot2 famous
-        svg
-            .append("rect")
-            .attr("x", 0)
-            .attr("y", 0)
-            .attr("height", height)
-            .attr("width", height)
-            .style("fill", "EBEBEB")
+        const g = svg.append('g')
+            .attr('transform', `translate(${margin.left},${margin.top})`);
+        const xAxisG = g.append('g')
+            .attr('transform', `translate(0, ${innerHeight})`);
+        const yAxisG = g.append('g');
+
+        xAxisG.append('text')
+            .attr('class', 'axis-label')
+            .attr('x', innerWidth / 2)
+            .attr('y', 100)
+            .text(xLabel);
+
+        yAxisG.append('text')
+            .attr('class', 'axis-label')
+            .attr('x', -innerHeight / 2)
+            .attr('y', -60)
+            .attr('transform', `rotate(-90)`)
+            .style('text-anchor', 'middle')
+            .text(yLabel);
+
+        const xScale = d3.scaleTime();
+        const yScale = d3.scaleLinear();
+
+        const xAxis = d3.axisBottom()
+            .scale(xScale)
+            .tickPadding(15)
+            .tickSize(-innerHeight);
+
+        const yAxis = d3.axisLeft()
+            .scale(yScale)
+            .ticks(5)
+            .tickPadding(15)
+            .tickSize(-innerWidth);
+
+        const row = d => {
+            d.data = parseDate(d.data);
+            d.casosNovos = +d.casosNovos;
+            return d;
+        };
 
         //Read the data
-        d3.csv("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/iris.csv", function (data) {
+        d3.csv("https://raw.githubusercontent.com/gustavopuga/visualizacao_dados_d3js/master/datasets/covid_sp_dispersao.csv", row).then(function (data) {
 
-            // Add X axis
-            var x = d3.scaleLinear()
-                .domain([4 * 0.95, 8 * 1.001])
-                .range([0, width])
-            svg.append("g")
-                .attr("transform", "translate(0," + height + ")")
-                .call(d3.axisBottom(x).tickSize(-height * 1.3).ticks(10))
-                .select(".domain").remove()
+            var tooltip = d3.select("#chart")
+                .append("div")
+                .style("opacity", 0)
+                .attr("class", "tooltip")
+                .style("background-color", "white")
+                .style("border", "solid")
+                .style("border-width", "1px")
+                .style("border-radius", "5px")
+                .style("padding", "10px");
 
-            // Add Y axis
-            var y = d3.scaleLinear()
-                .domain([-0.001, 9 * 1.01])
-                .range([height, 0])
-                .nice()
-            svg.append("g")
-                .call(d3.axisLeft(y).tickSize(-width * 1.3).ticks(7))
-                .select(".domain").remove()
+            var mouseover = function (d) {
+                tooltip
+                    .style("opacity", 1)
+            };
 
-            // Customization
-            svg.selectAll(".tick line").attr("stroke", "white")
+            var mousemove = function (d) {
+                tooltip
+                    .html("Casos registrados <br>" + timeFormat(d.data) + " <br>" + d.casosNovos)
+                    .style("left", (d3.mouse(this)[0] + 90) + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
+                    .style("top", (d3.mouse(this)[1]) + "px")
+                    .style("text-align", "center");
+            };
 
-            // Add X axis label:
-            svg.append("text")
-                .attr("text-anchor", "end")
-                .attr("x", width / 2 + margin.left)
-                .attr("y", height + margin.top + 20)
-                .text("Sepal Length");
+            // A function that change this tooltip when the leaves a point: just need to set opacity to 0 again
+            var mouseleave = function (d) {
+                tooltip
+                    .transition()
+                    .duration(1800)
+                    .style("opacity", 0)
+            };
 
-            // Y axis label:
-            svg.append("text")
-                .attr("text-anchor", "end")
-                .attr("transform", "rotate(-90)")
-                .attr("y", -margin.left + 20)
-                .attr("x", -margin.top - height / 2 + 20)
-                .text("Petal Length")
+            xScale
+                .domain(d3.extent(data, xValue))
+                .range([0, innerWidth])
+                .nice();
 
-            // Color scale: give me a specie name, I return a color
-            var color = d3.scaleOrdinal()
-                .domain(["setosa", "versicolor", "virginica"])
-                .range(["#F8766D", "#00BA38", "#619CFF"])
+            yScale
+                .domain(d3.extent(data, yValue))
+                .range([innerHeight, 0])
+                .nice();
 
-            // Add dots
-            svg.append('g')
-                .selectAll("dot")
-                .data(data)
-                .enter()
-                .append("circle")
-                .attr("cx", function (d) { return x(d.Sepal_Length); })
-                .attr("cy", function (d) { return y(d.Petal_Length); })
-                .attr("r", 5)
-                .style("fill", function (d) { return color(d.Species) })
+            g.selectAll('circle').data(data)
+                .enter().append('circle')
+                .attr('cx', d => xScale(xValue(d)))
+                .attr('cy', d => yScale(yValue(d)))
+                .attr('fill-opacity', 0.6)
+                .style("fill", "#69b3a2")
+                .attr('r', 8)
+                .on("mouseover", mouseover)
+                .on("mousemove", mousemove)
+                .on("mouseleave", mouseleave);
+
+            xAxisG.call(xAxis);
+            yAxisG.call(yAxis);
 
         })
+
 
     </script>
 
