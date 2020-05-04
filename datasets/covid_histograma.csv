@@ -1,6 +1,6 @@
-escala,casosAcumulados,obitosAcumuladosMedio
-7,0-7000,77.78
-14,7001-14000,146.85
-21,14001-21000,146.85
-28,21001-28000,146.85
-35,28001-35000,2511.00
+casosAcumulados,obitosAcumuladosMedio
+7,77.78
+14,146.85
+21,146.85
+28,146.85
+35,2511.00
