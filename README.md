@@ -39,3 +39,9 @@ Esta página armazena as atividades desenvolvida durante o curso de Visualizaç�
 
 ## Tarefa 12: TreeMap
 [Clique aqui para visualizar](https://gustavopuga.github.io/visualizacao_dados_d3js/tree.html)
+
+## Tarefa 13: Sunburst
+[Clique aqui para visualizar](https://gustavopuga.github.io/visualizacao_dados_d3js/sunburst.html)
+
+## Tarefa 13 v2: Sunburst Brasil
+[Clique aqui para visualizar](https://gustavopuga.github.io/visualizacao_dados_d3js/sunburst_brasil.html)
