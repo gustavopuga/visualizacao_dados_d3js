@@ -3,25 +3,50 @@
 <html>
 
 <head>
-    <style></style>
+    <style>
+        .tooltip {
+            background-color: black;
+            border: none;
+            border-radius: 5px;
+            padding: 15px;
+            min-width: 400px;
+            text-align: left;
+            color: white;
+        }
+    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.15.0/d3.min.js"></script>
-    <title>Teste Boxplot</title>
+    <title>Laboratório Boxplot</title>
 </head>
 
 <body>
-    <h1>Teste Boxplot</h1>
-    <p id="graph"></p>
+
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col justify-content-md-center">
+                <h1>Laboratório Boxplot</h1>
+                <h5 style="color: gray;">Casos de COVID - 19 em SP (01/05/2020)</h5>
+                <p>Aplicando gráfico do histograma para avaliar a distribuição dos registro de casos novos de COVID.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 align-self-md-center">
+                <div id="chart"></div>
+            </div>
+        </div>
+    </div>
 
     <script>
 
         // set the dimensions and margins of the graph
-        var margin = { top: 10, right: 30, bottom: 30, left: 40 },
-            width = 460 - margin.left - margin.right,
-            height = 400 - margin.top - margin.bottom;
+        var margin = { top: 10, right: 90, bottom: 90, left: 40 },
+            width = 1024 - margin.left - margin.right,
+            height = 700 - margin.top - margin.bottom;
 
         // append the svg object to the body of the page
-        var svg = d3.select("#graph")
+        var svg = d3.select("#chart")
             .append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
@@ -30,15 +55,15 @@
                 "translate(" + margin.left + "," + margin.top + ")");
 
         // Read the data and compute summary statistics for each specie
-        d3.csv("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/iris.csv").then( function (data) {
+        d3.csv("https://raw.githubusercontent.com/gustavopuga/visualizacao_dados_d3js/master/datasets/covid_geral.csv").then(function (data) {
 
             // Compute quartiles, median, inter quantile range min and max --> these info are then used to draw the box.
             var sumstat = d3.nest() // nest function allows to group the calculation per level of a factor
-                .key(function (d) { return d.Species; })
+                .key(function (d) { return d.regiao; })
                 .rollup(function (d) {
-                    q1 = d3.quantile(d.map(function (g) { return g.Sepal_Length; }).sort(d3.ascending), .25)
-                    median = d3.quantile(d.map(function (g) { return g.Sepal_Length; }).sort(d3.ascending), .5)
-                    q3 = d3.quantile(d.map(function (g) { return g.Sepal_Length; }).sort(d3.ascending), .75)
+                    q1 = d3.quantile(d.map(function (g) { return g.casosNovos; }).sort(d3.ascending), .25)
+                    median = d3.quantile(d.map(function (g) { return g.casosNovos; }).sort(d3.ascending), .5)
+                    q3 = d3.quantile(d.map(function (g) { return g.casosNovos; }).sort(d3.ascending), .75)
                     interQuantileRange = q3 - q1
                     min = q1 - 1.5 * interQuantileRange
                     max = q3 + 1.5 * interQuantileRange
@@ -49,7 +74,7 @@
             // Show the X scale
             var x = d3.scaleBand()
                 .range([0, width])
-                .domain(["setosa", "versicolor", "virginica"])
+                .domain(["Norte", "Nordeste", "Centro-Oeste", "Sudeste", "Sul"])
                 .paddingInner(1)
                 .paddingOuter(.5)
             svg.append("g")
@@ -58,7 +83,7 @@
 
             // Show the Y scale
             var y = d3.scaleLinear()
-                .domain([3, 9])
+                .domain([-50, 400])
                 .range([height, 0])
             svg.append("g").call(d3.axisLeft(y))
 
@@ -101,6 +126,7 @@
                 .attr("y2", function (d) { return (y(d.value.median)) })
                 .attr("stroke", "black")
                 .style("width", 80)
+
         })
 
     </script>
