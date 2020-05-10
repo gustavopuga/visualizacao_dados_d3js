@@ -1,49 +1,184 @@
+<!-- BASED ON https://github.com/PacktPublishing/Learn-D3.js/blob/master/Chapter11/TopoJSON/8-mesh-shapes.html -->
 <!DOCTYPE html>
 <html>
 
 <head>
     <style>
-        .country {
-            fill: gray;
+        .state {
             stroke: gray;
+            stroke-width: 2;
+        }
+
+        #tooltip {
+            pointer-events: none;
+        }
+
+        #tooltip rect {
+            fill: white;
+            fill-opacity: .7;
+            stroke: black;
             stroke-width: .5;
+        }
+
+        #tooltip text {
+            font-family: "Yanone Kaffeesatz", sans-serif;
+            font-size: 12px;
+            text-anchor: middle;
         }
     </style>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.15.0/d3.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-    <title>Teste Choropleth</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.15.0/d3.min.js"></script>
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+    <script src="https://d3js.org/topojson.v2.min.js"></script>
+
+    <title>Laboratório Choropleth: TopoJSON</title>
 </head>
 
 <body>
 
-    <h1>População dos Estados Brasileiros</h1>
-    <p id="chart"></p>
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col justify-content-md-center">
+                <h1>Laboratório Choropleth: TopoJSON</h1>
+                <h5 style="color: gray;">Casos de COVID - 19 (09/05/2020)</h5>
+                <p>Casos registrados entre março e maio de 2020</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 align-self-md-center">
+                <div id="chart"></div>
+            </div>
+        </div>
 
-    <script>
+        <script>
 
-        const color = d3.scaleOrdinal(d3.schemeCategory10);
-        const width = 960;
-        const height = 700;
+            const width = 960;
+            const height = 700;
 
-        const svg = d3.select("#chart").append("svg")
-            .attr("width", width).attr("height", height);
+            const svg = d3.select("#chart").append("svg")
+                .attr("width", width).attr("height", height);
 
-        const geoPath = d3.geoPath().projection(d3.geoMercator()).pointRadius(3);
+            //Legenda
+            const bbox = d3.select("#chart").node().getBoundingClientRect();
 
-        d3.json('https://raw.githubusercontent.com/gustavopuga/visualizacao_dados_d3js/master/datasets/estados_br.topojson')
-            .then(function (data) {
-console.info(data);
-                const geodata = topojson.feature(data);
+            // Projeção 
+            const projection = d3.geoMercator();
 
+            // Criando a função que irá gerar a projetção
+            const geoPath = d3.geoPath()
+                .projection(projection);
+
+            // Escala de cores
+            const colorScale = d3.scaleSqrt(["hsla(240,100%,50%,.1)", "red"]);
+
+            const map = {};
+
+            var promises = [
+                d3.json("https://raw.githubusercontent.com/gustavopuga/visualizacao_dados_d3js/master/json/estados_br.topojson"),
+                d3.csv("https://raw.githubusercontent.com/gustavopuga/visualizacao_dados_d3js/master/datasets/covid_map.csv", function (row) {
+                    return {
+                        cod_ibge: +row.cod_ibge,
+                        population: +row.casosAcumulados
+                    }
+                })
+            ]
+
+            Promise.all(promises).then(ready)
+
+            function ready([shapes, thematic]) {
+
+                // save in a global context
+                map.features = topojson.feature(shapes, shapes.objects.estados).features;
+
+                // add data to properties
+                map.features.forEach(function (d) {
+                    const entry = thematic.filter(t => t.cod_ibge == d.properties.codigo_ibg)[0];
+                    if (entry) {
+                        d.properties.population = entry.population;
+                    }
+                })
+
+                const meshedGeoJSON = topojson.mesh(shapes);
+
+                projection.fitSize([width, height], meshedGeoJSON);
+
+                // configure the scale
+                colorScale.domain(d3.extent(map.features, d => d.properties.population));
+                draw(meshedGeoJSON);
+                drawTooltips();
+            }
+
+            let mouseOver = function (d, i) {
+
+                d3.selectAll(".state")
+                    .transition()
+                    .duration(200)
+                    .style("stroke", "gray")
+                    .style("opacity", .5);
+
+                d3.select(this)
+                    .transition()
+                    .duration(200)
+                    .style("opacity", 1)
+                    .style("stroke", "black");
+
+                const tooltip = d3.select("#tooltip")
+                    .attr("transform", `translate(${[d3.event.x, d3.event.y]})`)
+                    .style("opacity", 1);
+                tooltip.select("text:first-of-type")
+                    .style("font-weight", "bold")
+                    .text(d.properties.name)
+                tooltip.select("text:last-child")
+                    .text("Casos Registrados: " + d3.format(".2s")(d.properties.population));
+            }
+
+            let mouseLeave = function (d) {
+
+                d3.selectAll(".state")
+                    .transition()
+                    .duration(200)
+                    .style("opacity", .8);
+
+                d3.select(this)
+                    .transition()
+                    .duration(200)
+                    .style("stroke", "gray");
+
+                d3.select("#tooltip").style("opacity", 0);
+            }
+
+            function drawTooltips() {
+                svg.append("g").attr("id", "tooltip")
+                    .style("opacity", 0)
+                    .each(function (d) {
+                        d3.select(this).append("rect")
+                            .attr("height", 40)
+                            .attr("width", 150)
+                            .attr("rx", 5).attr("ry", 5)
+                            .attr("x", -75).attr("y", -20)
+                        d3.select(this).append("text")
+                            .attr("y", -5)
+                        d3.select(this).append("text")
+                            .attr("y", 15);
+                    })
+            }
+
+            function draw(meshedGeoJSON) {
                 svg.selectAll("path.country")
-                    .data(geodata.features).enter()
-                    .append("path").attr("class", "country")
-                    .style("fill", (d, i) => color(i))
-                    .attr("d", geoPath);
-            });
+                    .datum(meshedGeoJSON).data(map.features)
+                    .enter()
+                    .append("path")
+                    .attr("class", "state")
+                    .attr('d', geoPath)
+                    .style("fill", d => colorScale(d.properties.population))
+                    .on("mouseover", mouseOver)
+                    .on("mouseleave", mouseLeave)
+            }
 
-    </script>
+        </script>
 
 </body>
 
