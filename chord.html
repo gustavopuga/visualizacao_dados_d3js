@@ -3,6 +3,7 @@
 <html>
 
 <head>
+    <meta charset="UTF-8">
     <style>
         text {
             font-family: 'Yanone Kaffeesatz', sans-serif;
@@ -91,11 +92,10 @@
                     .sortGroups((a, b) => d3.descending(a, b))
                     .sortSubgroups((a, b) => d3.descending(a, b));
                 const chords = chord(matrix);
-
+console.info(matrix);
                 const radius = height / 2 - margin / 2;
 
                 const ribbon = d3.ribbon().radius(radius);
-
 
                 const color = d3.scaleSequential(d3.interpolateRainbow).domain([0, matrix.length]);
 
@@ -124,7 +124,6 @@
                     .on("mouseover", highlightNode)
                     .on("mouseout", d => d3.selectAll("path").classed('faded', false));
 
-
                 chart.selectAll("text")
                     .data(chords.groups)
                     .enter().append("text")
@@ -137,7 +136,8 @@
                 const tooltip = chart.append("g")
                     .attr("class", 'tooltip hidden')
                     .attr("transform", `translate(${[-75, -50]})`)
-                    .style("opacity", 0)
+                    .style("opacity", 0);
+
                 tooltip.append("rect")
                     .attr("width", 150)
                     .attr("height", 100)
@@ -176,12 +176,14 @@
                 d3.select('#to tspan:nth-child(1)').text(headers[edge.target.index]);
                 d3.select('#from tspan:nth-child(2)').text(edge.source.value);
                 d3.select('#to tspan:nth-child(2)').text(edge.target.value);
+
             }
 
             function contrast(color) {
                 const c = d3.rgb(color);
                 return (c.r * 0.299 + c.g * 0.587 + c.b * 0.114) > 130 ? 'black' : 'white';
             }
+
         </script>
 
 </body>
