@@ -45,3 +45,8 @@ Esta página armazena as atividades desenvolvida durante o curso de Visualizaç�
 
 ## Tarefa 13 v2: Sunburst Brasil
 [Clique aqui para visualizar](https://gustavopuga.github.io/visualizacao_dados_d3js/sunburst_brasil.html)
+
+## Tarefa 14: Grafo
+[GraphOnline.ru](http://graphonline.ru/en/?graph=PnztiUaSpdJsXXVVZZcst)
+[Chord Diagram](https://gustavopuga.github.io/visualizacao_dados_d3js/chord.html)
+[Grafo de Força](https://gustavopuga.github.io/visualizacao_dados_d3js/force.html)
