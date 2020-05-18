@@ -66,12 +66,12 @@
 
                 // Extract the array of nodes from the map by name.
                 var nodes = d3.values(nodesByName);
-                
+
                 var label = {
                     'nodes': [],
                     'links': []
                 };
-                
+
                 nodes.forEach(function (d, i) {
                     label.nodes.push({ node: d });
                     label.nodes.push({ node: d });
@@ -80,11 +80,11 @@
                         target: i * 2 + 1
                     });
                 });
-                
+
                 var labelLayout = d3.forceSimulation(label.nodes)
-                .force("charge", d3.forceManyBody().strength(-100))
-                .force("link", d3.forceLink(label.links).distance(0).strength(2));
-                
+                    .force("charge", d3.forceManyBody().strength(-100))
+                    .force("link", d3.forceLink(label.links).distance(0).strength(2));
+
                 var graphLayout = d3.forceSimulation(nodes)
                     .force("charge", d3.forceManyBody().strength(-8000))
                     .force("center", d3.forceCenter(width / 2, height / 2))
@@ -93,7 +93,7 @@
                     .force("link", d3.forceLink(links).id(function (d) { return d.id; }).distance(50).strength(1))
                     .on("tick", ticked);
 
-                    var container = svg.append("g");
+                var container = svg.append("g");
 
                 var adjlist = [];
 
@@ -111,6 +111,20 @@
                         .on("zoom", function () { container.attr("transform", d3.event.transform); })
                 );
 
+                svg.append("svg:defs").selectAll("marker")
+                    .data(["end"])      // Different link/path types can be defined here
+                    .enter().append("svg:marker")    // This section adds in the arrows
+                    .attr("id", String)
+                    .attr("viewBox", "0 -5 10 10")
+                    .attr("refX", 20)
+                    .attr("refY", 0)
+                    .attr("markerWidth", 6)
+                    .attr("markerHeight", 6)
+                    .attr("orient", "auto")
+                    .attr("fill", "#aaa")
+                    .append("svg:path")
+                    .attr("d", "M0,-5L8,0L0,5");
+
                 // Create the link lines.
                 var link = container.append("g").attr("class", "links")
                     .selectAll("line")
@@ -118,7 +132,8 @@
                     .enter()
                     .append("line")
                     .attr("stroke", "#aaa")
-                    .attr("stroke-width", "5px");
+                    .attr("stroke-width", 2.5)
+                    .attr("marker-end", "url(#end)");
 
                 // Create the node circles.
                 var node = container.append("g").attr("class", "nodes")
