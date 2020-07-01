@@ -1,362 +1,370 @@
-[
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Cérebro_Humano",
-    "@type": [
-      "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Rede_neural",
-      "owl:NamedIndividual"
-    ]
+{
+  "@context": {
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#"
   },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Teoria",
-    "@type": "owl:Class"
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Galileu",
-    "@type": [
-      "owl:NamedIndividual",
-      "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Cientista"
-    ]
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Probabilidade",
-    "@type": "owl:Class",
-    "rdfs:subClassOf": {
-      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Padrão"
-    }
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Mecânica_quantica",
-    "@type": "owl:Class",
-    "rdfs:subClassOf": {
-      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Teoria"
-    }
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Estuda",
-    "@type": "owl:ObjectProperty",
-    "owl:inverseOf": {
-      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#É_expandida_por"
+  "@graph": [
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Cérebro_Humano",
+      "@type": [
+        "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Rede_neural",
+        "owl:NamedIndividual"
+      ]
     },
-    "rdfs:domain": {
-      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Cientista"
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Teoria",
+      "@type": "owl:Class"
     },
-    "rdfs:range": {
-      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Area_de_conhecimento"
-    }
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Data_nascimento",
-    "@type": "owl:DatatypeProperty",
-    "rdfs:domain": {
-      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Cientista"
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Galileu",
+      "@type": [
+        "owl:NamedIndividual",
+        "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Cientista"
+      ]
     },
-    "rdfs:range": {
-      "@id": "xsd:dateTime"
-    }
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Possui",
-    "@type": "owl:ObjectProperty",
-    "rdfs:domain": {
-      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Física"
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Probabilidade",
+      "@type": "owl:Class",
+      "rdfs:subClassOf": {
+        "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Padrão"
+      }
     },
-    "rdfs:range": {
-      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Teoria"
-    }
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Algebra",
-    "@type": "owl:Class",
-    "rdfs:subClassOf": {
-      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Padrão"
-    }
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Newton",
-    "@type": [
-      "owl:NamedIndividual",
-      "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Cientista"
-    ]
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos",
-    "@type": "owl:Ontology"
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Einstein",
-    "@type": [
-      "owl:NamedIndividual",
-      "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Cientista"
-    ]
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Equação",
-    "@type": "owl:Class",
-    "rdfs:subClassOf": {
-      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Padrão"
-    }
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Orienta",
-    "@type": "owl:ObjectProperty",
-    "rdfs:domain": {
-      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Cientista"
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Mecânica_quantica",
+      "@type": "owl:Class",
+      "rdfs:subClassOf": {
+        "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Teoria"
+      }
     },
-    "rdfs:range": {
-      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Cientista"
-    }
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#von_Neuman",
-    "@type": [
-      "owl:NamedIndividual",
-      "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Cientista"
-    ]
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Imprevisível",
-    "@type": "owl:DatatypeProperty",
-    "rdfs:domain": {
-      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Sistema_complexo"
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Estuda",
+      "@type": "owl:ObjectProperty",
+      "owl:inverseOf": {
+        "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#É_expandida_por"
+      },
+      "rdfs:domain": {
+        "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Cientista"
+      },
+      "rdfs:range": {
+        "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Area_de_conhecimento"
+      }
     },
-    "rdfs:range": {
-      "@id": "xsd:boolean"
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Data_nascimento",
+      "@type": "owl:DatatypeProperty",
+      "rdfs:domain": {
+        "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Cientista"
+      },
+      "rdfs:range": {
+        "@id": "xsd:dateTime"
+      }
     },
-    "rdfs:subPropertyOf": {
-      "@id": "owl:topDataProperty"
-    }
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Sociedade",
-    "@type": [
-      "owl:NamedIndividual",
-      "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Rede_Social"
-    ]
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Area_de_conhecimento",
-    "@type": "owl:Class"
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Torricelli",
-    "@type": [
-      "owl:NamedIndividual",
-      "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Cientista"
-    ]
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Explica",
-    "@type": "owl:ObjectProperty",
-    "owl:inverseOf": {
-      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Possui"
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Possui",
+      "@type": "owl:ObjectProperty",
+      "rdfs:domain": {
+        "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Física"
+      },
+      "rdfs:range": {
+        "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Teoria"
+      }
     },
-    "rdfs:domain": {
-      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Teoria"
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Algebra",
+      "@type": "owl:Class",
+      "rdfs:subClassOf": {
+        "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Padrão"
+      }
     },
-    "rdfs:range": {
-      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Física"
-    }
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#É_expandida_por",
-    "@type": "owl:ObjectProperty",
-    "rdfs:domain": {
-      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Area_de_conhecimento"
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Newton",
+      "@type": [
+        "owl:NamedIndividual",
+        "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Cientista"
+      ]
     },
-    "rdfs:range": {
-      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Cientista"
-    }
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Matemática",
-    "@type": "owl:Class",
-    "rdfs:subClassOf": {
-      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Area_de_conhecimento"
-    }
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Sensível_a_perturbação",
-    "@type": "owl:DatatypeProperty",
-    "rdfs:domain": {
-      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Sistema_complexo"
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos",
+      "@type": "owl:Ontology"
     },
-    "rdfs:range": {
-      "@id": "xsd:boolean"
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Einstein",
+      "@type": [
+        "owl:NamedIndividual",
+        "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Cientista"
+      ]
     },
-    "rdfs:subPropertyOf": {
-      "@id": "owl:topDataProperty"
-    }
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Facebook",
-    "@type": [
-      "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Rede_Social",
-      "owl:NamedIndividual"
-    ]
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Nome",
-    "@type": "owl:DatatypeProperty",
-    "rdfs:domain": {
-      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Cientista"
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Equação",
+      "@type": "owl:Class",
+      "rdfs:subClassOf": {
+        "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Padrão"
+      }
     },
-    "rdfs:range": {
-      "@id": "xsd:string"
-    }
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Barrow",
-    "@type": [
-      "owl:NamedIndividual",
-      "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Cientista"
-    ]
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Outras_teorias",
-    "@type": "owl:Class",
-    "rdfs:subClassOf": {
-      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Teoria"
-    }
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#CNNs",
-    "@type": [
-      "owl:NamedIndividual",
-      "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Rede_neural"
-    ]
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Poincaré",
-    "@type": [
-      "owl:NamedIndividual",
-      "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Cientista"
-    ]
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#É_composta",
-    "@type": "owl:ObjectProperty",
-    "rdfs:domain": {
-      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Padrão"
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Orienta",
+      "@type": "owl:ObjectProperty",
+      "rdfs:domain": {
+        "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Cientista"
+      },
+      "rdfs:range": {
+        "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Cientista"
+      }
     },
-    "rdfs:range": {
-      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Matemática"
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#von_Neuman",
+      "@type": [
+        "owl:NamedIndividual",
+        "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Cientista"
+      ]
     },
-    "rdfs:subPropertyOf": {
-      "@id": "owl:topObjectProperty"
-    }
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Cientista",
-    "@type": "owl:Class"
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Autômato_celular_bidimensional",
-    "@type": [
-      "owl:NamedIndividual",
-      "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Autômato_celular"
-    ]
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Física",
-    "@type": "owl:Class",
-    "rdfs:subClassOf": {
-      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Area_de_conhecimento"
-    }
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Inicio_do_estudo",
-    "@type": "owl:DatatypeProperty",
-    "rdfs:domain": {
-      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Area_de_conhecimento"
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Imprevisível",
+      "@type": "owl:DatatypeProperty",
+      "rdfs:domain": {
+        "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Sistema_complexo"
+      },
+      "rdfs:range": {
+        "@id": "xsd:boolean"
+      },
+      "rdfs:subPropertyOf": {
+        "@id": "owl:topDataProperty"
+      }
     },
-    "rdfs:range": {
-      "@id": "xsd:dateTime"
-    }
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Descreve",
-    "@type": "owl:ObjectProperty",
-    "owl:inverseOf": {
-      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#É_composta"
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Sociedade",
+      "@type": [
+        "owl:NamedIndividual",
+        "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Rede_Social"
+      ]
     },
-    "rdfs:domain": {
-      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Matemática"
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Area_de_conhecimento",
+      "@type": "owl:Class"
     },
-    "rdfs:range": {
-      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Padrão"
-    }
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Sistema_dinâmico_complexo",
-    "@type": "owl:Class",
-    "rdfs:subClassOf": {
-      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Sistema_complexo"
-    }
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Autômato_celular_elementar",
-    "@type": [
-      "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Autômato_celular",
-      "owl:NamedIndividual"
-    ]
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Sistema_complexo",
-    "@type": "owl:Class",
-    "rdfs:subClassOf": {
-      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Teoria"
-    }
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Relatividade",
-    "@type": "owl:Class",
-    "rdfs:subClassOf": {
-      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Teoria"
-    }
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Não_linear",
-    "@type": "owl:DatatypeProperty",
-    "rdfs:domain": {
-      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Sistema_complexo"
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Torricelli",
+      "@type": [
+        "owl:NamedIndividual",
+        "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Cientista"
+      ]
     },
-    "rdfs:range": {
-      "@id": "xsd:boolean"
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Explica",
+      "@type": "owl:ObjectProperty",
+      "owl:inverseOf": {
+        "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Possui"
+      },
+      "rdfs:domain": {
+        "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Teoria"
+      },
+      "rdfs:range": {
+        "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Física"
+      }
     },
-    "rdfs:subPropertyOf": {
-      "@id": "owl:topDataProperty"
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#É_expandida_por",
+      "@type": "owl:ObjectProperty",
+      "rdfs:domain": {
+        "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Area_de_conhecimento"
+      },
+      "rdfs:range": {
+        "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Cientista"
+      }
+    },
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Matemática",
+      "@type": "owl:Class",
+      "rdfs:subClassOf": {
+        "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Area_de_conhecimento"
+      }
+    },
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Sensível_a_perturbação",
+      "@type": "owl:DatatypeProperty",
+      "rdfs:domain": {
+        "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Sistema_complexo"
+      },
+      "rdfs:range": {
+        "@id": "xsd:boolean"
+      },
+      "rdfs:subPropertyOf": {
+        "@id": "owl:topDataProperty"
+      }
+    },
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Facebook",
+      "@type": [
+        "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Rede_Social",
+        "owl:NamedIndividual"
+      ]
+    },
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Nome",
+      "@type": "owl:DatatypeProperty",
+      "rdfs:domain": {
+        "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Cientista"
+      },
+      "rdfs:range": {
+        "@id": "xsd:string"
+      }
+    },
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Barrow",
+      "@type": [
+        "owl:NamedIndividual",
+        "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Cientista"
+      ]
+    },
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Outras_teorias",
+      "@type": "owl:Class",
+      "rdfs:subClassOf": {
+        "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Teoria"
+      }
+    },
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#CNNs",
+      "@type": [
+        "owl:NamedIndividual",
+        "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Rede_neural"
+      ]
+    },
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Poincaré",
+      "@type": [
+        "owl:NamedIndividual",
+        "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Cientista"
+      ]
+    },
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#É_composta",
+      "@type": "owl:ObjectProperty",
+      "rdfs:domain": {
+        "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Padrão"
+      },
+      "rdfs:range": {
+        "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Matemática"
+      },
+      "rdfs:subPropertyOf": {
+        "@id": "owl:topObjectProperty"
+      }
+    },
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Cientista",
+      "@type": "owl:Class"
+    },
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Autômato_celular_bidimensional",
+      "@type": [
+        "owl:NamedIndividual",
+        "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Autômato_celular"
+      ]
+    },
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Física",
+      "@type": "owl:Class",
+      "rdfs:subClassOf": {
+        "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Area_de_conhecimento"
+      }
+    },
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Inicio_do_estudo",
+      "@type": "owl:DatatypeProperty",
+      "rdfs:domain": {
+        "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Area_de_conhecimento"
+      },
+      "rdfs:range": {
+        "@id": "xsd:dateTime"
+      }
+    },
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Descreve",
+      "@type": "owl:ObjectProperty",
+      "owl:inverseOf": {
+        "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#É_composta"
+      },
+      "rdfs:domain": {
+        "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Matemática"
+      },
+      "rdfs:range": {
+        "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Padrão"
+      }
+    },
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Sistema_dinâmico_complexo",
+      "@type": "owl:Class",
+      "rdfs:subClassOf": {
+        "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Sistema_complexo"
+      }
+    },
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Autômato_celular_elementar",
+      "@type": [
+        "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Autômato_celular",
+        "owl:NamedIndividual"
+      ]
+    },
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Sistema_complexo",
+      "@type": "owl:Class",
+      "rdfs:subClassOf": {
+        "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Teoria"
+      }
+    },
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Relatividade",
+      "@type": "owl:Class",
+      "rdfs:subClassOf": {
+        "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Teoria"
+      }
+    },
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Não_linear",
+      "@type": "owl:DatatypeProperty",
+      "rdfs:domain": {
+        "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Sistema_complexo"
+      },
+      "rdfs:range": {
+        "@id": "xsd:boolean"
+      },
+      "rdfs:subPropertyOf": {
+        "@id": "owl:topDataProperty"
+      }
+    },
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Padrão",
+      "@type": "owl:Class"
+    },
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Rede_Social",
+      "@type": "owl:Class",
+      "rdfs:subClassOf": {
+        "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Sistema_dinâmico_complexo"
+      }
+    },
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Outros_padrões",
+      "@type": "owl:Class",
+      "rdfs:subClassOf": {
+        "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Padrão"
+      }
+    },
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Autômato_celular",
+      "@type": "owl:Class",
+      "rdfs:subClassOf": {
+        "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Sistema_dinâmico_complexo"
+      }
+    },
+    {
+      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Rede_neural",
+      "@type": "owl:Class",
+      "rdfs:subClassOf": {
+        "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Sistema_dinâmico_complexo"
+      }
     }
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Padrão",
-    "@type": "owl:Class"
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Rede_Social",
-    "@type": "owl:Class",
-    "rdfs:subClassOf": {
-      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Sistema_dinâmico_complexo"
-    }
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Outros_padrões",
-    "@type": "owl:Class",
-    "rdfs:subClassOf": {
-      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Padrão"
-    }
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Autômato_celular",
-    "@type": "owl:Class",
-    "rdfs:subClassOf": {
-      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Sistema_dinâmico_complexo"
-    }
-  },
-  {
-    "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Rede_neural",
-    "@type": "owl:Class",
-    "rdfs:subClassOf": {
-      "@id": "http://www.semanticweb.org/gustavofortunatopuga/ontologies/2020/5/sistemas_dinamicos#Sistema_dinâmico_complexo"
-    }
-  }
-]
+  ]
+}
