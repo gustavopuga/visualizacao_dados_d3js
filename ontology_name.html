@@ -1,0 +1,148 @@
+<html>
+
+<body>
+
+    <script src="//unpkg.com/force-graph"></script>
+    <div id="graph"></div>
+
+    <script>
+
+        function jsonldGraph(jsonld) {
+
+            var nodes = [];
+            var links = [];
+            var colors = {
+                'owl:Class': '#f39c12',
+                'owl:NamedIndividual': '#8e44ad',
+                'owl:DatatypeProperty': '#27ae60',
+                'owl:ObjectProperty': '#2980b9'
+            }
+
+            jsonld['@graph'].forEach((item, index) => {
+                var type = item['@type'];
+                var elementType;
+                if (Array.isArray(type)) {
+                    elementType = type.filter(type => { return type.includes("owl:") })[0];
+                } else {
+                    elementType = type;
+                }
+                if (!elementType.includes("Ontology")) {
+                    if (elementType.includes("owl:ObjectProperty")) {
+                        var source = item['rdfs:domain']['@id'].split("#")[1];
+                        var target = item['rdfs:range']['@id'].split("#")[1];
+                        var link = createLink(source, target, item['@id'].split("#")[1]);
+                        link.color = "#3498db";
+                        link.directionalParticleColor = '#000000';
+                        links.push(link);
+                    } else {
+                        var id = item['@id'].split("#")[1];
+                        var node = createNode(id, elementType, colors[elementType]);
+                        nodes.push(node);
+
+                        var subclass = item['rdfs:subClassOf'];
+                        if (subclass) {
+                            var source = id;
+                            var target = subclass['@id'].split("#")[1];
+                            var link = createLink(source, target, 'É_um');
+                            link.dashed = true;
+                            links.push(link);
+                        }
+
+                        var subclass = item['rdfs:domain'];
+                        if (subclass) {
+                            var source = id;
+                            var target = subclass['@id'].split("#")[1];
+                            var link = createLink(source, target, 'É_atributo');
+                            links.push(link);
+                        }
+
+                        if (Array.isArray(type)) {
+                            var source = id;
+                            var target = type.filter(type => { return !type.includes("owl:") })[0].split("#")[1];
+                            var link = createLink(source, target, 'É_um');
+                            links.push(link);
+                        }
+                    }
+                }
+
+            });
+            return { nodes, links };
+        }
+
+        function createNode(name, type, color) {
+            return {
+                id: name,
+                label: type,
+                color: color,
+                val: 30
+            };
+        }
+
+        function createLink(source, target, label) {
+            return {
+                source: source,
+                target: target,
+                label: label,
+                curvature: 0.5
+            };
+        }
+
+        fetch('https://raw.githubusercontent.com/gustavopuga/visualizacao_dados_d3js/master/json/ontologia.jsonld').then(res => res.json()).then(sourceJsonld => {
+            const dashLen = 6;
+            const gapLen = 8;
+            
+            var graph = jsonldGraph(sourceJsonld);
+            const Graph = ForceGraph()
+                (document.getElementById('graph'))
+                .nodeLabel('id')
+                .linkDirectionalParticles(2)
+                .linkCurvature('curvature')
+                .linkLabel('label')
+                .linkWidth(5)
+                .graphData(graph)
+                .nodeCanvasObject((node, ctx, globalScale) => {
+                    const label = node.id;
+                    const fontSize = 12 / globalScale;
+                    ctx.font = `${fontSize}px Sans-Serif`;
+                    const textWidth = ctx.measureText(label).width;
+                    const bckgDimensions = [textWidth, fontSize].map(n => n + fontSize * 0.2); // some padding
+
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+                    ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
+
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillStyle = node.color;
+                    ctx.fillText(label, node.x, node.y);
+                })
+                .linkLineDash(link => link.dashed && [dashLen, gapLen])
+                .linkDirectionalParticleColor('#000000')
+                .nodeRelSize(1)
+                .cooldownTicks(100)
+                .onNodeDrag((node, translate) => {
+                    if (selectedNodes.has(node)) { // moving a selected node
+                        [...selectedNodes]
+                            .filter(selNode => selNode !== node) // don't touch node being dragged
+                            .forEach(node => ['x', 'y'].forEach(coord => node[`f${coord}`] = node[coord] + translate[coord])); // translate other nodes by same amount
+                    }
+                })
+                .onNodeDragEnd(node => {
+                    if (selectedNodes.has(node)) { // finished moving a selected node
+                        [...selectedNodes]
+                            .filter(selNode => selNode !== node) // don't touch node being dragged
+                            .forEach(node => ['x', 'y'].forEach(coord => node[`f${coord}`] = undefined)); // unfix controlled nodes
+                    }
+                });
+
+            Graph.d3Force('center', null);
+
+            // fit to canvas when engine stops
+            Graph.onEngineStop(() => Graph.zoomToFit(400));
+        });
+
+
+
+    </script>
+</body>
+
+</html>

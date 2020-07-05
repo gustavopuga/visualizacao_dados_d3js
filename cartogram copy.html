@@ -36,21 +36,14 @@
 
     <script>
 
+
         const colorScale = d3.scaleSequential(d3.interpolateYlOrBr);
         const cartogram = Cartogram().valFormatter(n => n.toPrecision(3))(document.getElementById('brazil'));
 
-        var map = d3.map();
-
-        d3.queue()
-            .defer(d3.json, "https://raw.githubusercontent.com/gustavopuga/visualizacao_dados_d3js/master/json/estados_br.topojson")
-            .defer(d3.csv, "https://raw.githubusercontent.com/gustavopuga/visualizacao_dados_d3js/master/datasets/covid_map.csv", function (d) { map.set(d.cod_ibge, +d.casosAcumulados); })
-            .await(ready);
-
-        function ready(error, brazil) {
+        d3.json('https://raw.githubusercontent.com/gustavopuga/visualizacao_dados_d3js/master/json/estados_br.topojson', (error, brazil) => {
             if (error) throw error;
 
             let ccData;
-
 
             var projection = d3.geoMercator()
                 .scale(1000)
@@ -70,9 +63,11 @@
             genVals();
             render();
 
+            //
+
             function genVals() {
                 ccData = Object.assign(...brazil.objects.estados.geometries
-                    .map(map)
+                    .map(({ properties: { id } }) => ({ [id]: Math.random() }))
                 );
                 console.info(ccData)
             }
@@ -80,8 +75,7 @@
             function render() {
                 cartogram.iterations(controls.Iterations);
             }
-        }
-
+        });
     </script>
 </body>
 

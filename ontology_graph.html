@@ -1,21 +1,17 @@
-<!-- BASED ON https://www.d3-graph-gallery.com/graph/network_basic.html -->
-<!-- BASED ON https://bl.ocks.org/mapio/53fed7d84cd1812d6a6639ed7aa83868 -->
-<!-- BASED ON https://bl.ocks.org/mbostock/2949937 -->
-<!-- BASED ON http://jsfiddle.net/mdml/ncwuej9j/ -->
+<!-- BASED ON http://bl.ocks.org/fancellu/2c782394602a93921faff74e594d1bb1 -->
+
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="UTF-8">
-    <style>
-    </style>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.15.0/d3.min.js"></script>
 
-    <title>Laboratório Ontologia</title>
+    <title>Laboratório Ontologia - Grafo</title>
 </head>
 
 <body>
@@ -23,7 +19,7 @@
     <div class="container">
         <div class="row justify-content-md-center">
             <div class="col justify-content-md-center">
-                <h1>Laboratório Ontologia</h1>
+                <h1>Laboratório Ontologia - Grafo</h1>
                 <h5 style="color: gray;">Ontologia sobre Sistemas Dinâmicos Complexos</h5>
             </div>
         </div>
@@ -35,12 +31,20 @@
 
         <script>
 
+            let h = 600,
+                w = 800,
+                maxLabelWidth = 250,
+                transitionDuration = 750,
+                transitionEase = 'cubic-in-out',
+                minRadius = 5,
+                scalingFactor = 2;
+
             var colors = d3.scaleOrdinal(d3.schemeCategory10);
 
             // set the dimensions and margins of the graph
             var margin = { top: 10, right: 30, bottom: 30, left: 40 },
-                width = 800 - margin.left - margin.right,
-                height = 400 - margin.top - margin.bottom;
+                width = 1024 - margin.left - margin.right,
+                height = 600 - margin.top - margin.bottom;
 
             // append the svg object to the body of the page
             var svg = d3.select("#chart")
@@ -70,7 +74,89 @@
                 .force("charge", d3.forceManyBody())
                 .force("center", d3.forceCenter(width / 2, height / 2));
 
-            d3.json("https://raw.githubusercontent.com/gustavopuga/visualizacao_dados_d3js/master/json/graph.json").then(function (graph) {
+            function jsonldGraph(jsonld) {
+
+                var nodes = [];
+                var links = [];
+                var colors = {
+                    'owl:Class': '#f39c12',
+                    'owl:NamedIndividual': '#8e44ad',
+                    'owl:DatatypeProperty': '#27ae60',
+                    'owl:ObjectProperty': '#2980b9'
+                }
+
+                jsonld['@graph'].forEach((item, index) => {
+                    var type = item['@type'];
+                    var elementType;
+                    if (Array.isArray(type)) {
+                        elementType = type.filter(type => { return type.includes("owl:") })[0];
+                    } else {
+                        elementType = type;
+                    }
+                    if (!elementType.includes("Ontology")) {
+                        if (elementType.includes("owl:ObjectProperty")) {
+                            var source = item['rdfs:domain']['@id'].split("#")[1];
+                            var target = item['rdfs:range']['@id'].split("#")[1];
+                            var link = createLink(source, target, item['@id'].split("#")[1]);
+                            link.color = "#3498db";
+                            link.directionalParticleColor = '#000000';
+                            links.push(link);
+                        } else {
+                            var id = item['@id'].split("#")[1];
+                            var node = createNode(id, elementType, colors[elementType]);
+                            nodes.push(node);
+
+                            var subclass = item['rdfs:subClassOf'];
+                            if (subclass) {
+                                var source = id;
+                                var target = subclass['@id'].split("#")[1];
+                                var link = createLink(source, target, 'É_um');
+                                link.dashed = true;
+                                links.push(link);
+                            }
+
+                            var subclass = item['rdfs:domain'];
+                            if (subclass) {
+                                var source = id;
+                                var target = subclass['@id'].split("#")[1];
+                                var link = createLink(source, target, 'É_atributo');
+                                links.push(link);
+                            }
+
+                            if (Array.isArray(type)) {
+                                var source = id;
+                                var target = type.filter(type => { return !type.includes("owl:") })[0].split("#")[1];
+                                var link = createLink(source, target, 'É_um');
+                                links.push(link);
+                            }
+                        }
+                    }
+
+                });
+                return { nodes, links };
+            }
+
+            function createNode(name, type, color) {
+                return {
+                    id: name,
+                    label: type,
+                    color: color,
+                    val: 30
+                };
+            }
+
+            function createLink(source, target, label) {
+                return {
+                    source: source,
+                    target: target,
+                    label: label,
+                    curvature: 0.5
+                };
+            }
+
+            d3.json("https://raw.githubusercontent.com/gustavopuga/visualizacao_dados_d3js/master/json/ontologia.jsonld").then(function (sourceJsonld) {
+
+                var graph = jsonldGraph(sourceJsonld);
                 update(graph.links, graph.nodes);
             });
 
@@ -80,7 +166,7 @@
                     .enter()
                     .append("line")
                     .attr("stroke", "#aaa")
-                    .attr("stroke-width", 1)
+                    .attr("stroke-width", 0.6)
                     .attr("class", "link")
                     .attr('marker-end', 'url(#arrowhead)')
 
@@ -112,7 +198,7 @@
                     .style("text-anchor", "middle")
                     .style("pointer-events", "none")
                     .attr("startOffset", "50%")
-                    .text(function (d) { return d.type });
+                    .text(function (d) { return d.label });
 
                 node = svg.selectAll(".node")
                     .data(nodes)
@@ -122,19 +208,18 @@
                     .call(d3.drag()
                         .on("start", dragstarted)
                         .on("drag", dragged)
-                        //.on("end", dragended)
                     );
 
                 node.append("circle")
                     .attr("r", 5)
-                    .style("fill", function (d, i) { return colors(i); })
+                    .style("fill", function (d, i) { return d.color; })
 
                 node.append("title")
                     .text(function (d) { return d.id; });
 
                 node.append("text")
                     .attr("dy", -3)
-                    .text(function (d) { return d.name + ":" + d.label; });
+                    .text(function (d) { return d.id; });
 
                 simulation
                     .nodes(nodes)
@@ -155,7 +240,44 @@
                     .attr("transform", function (d) { return "translate(" + d.x + ", " + d.y + ")"; });
 
                 edgepaths.attr('d', function (d) {
-                    return 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y;
+                    var x1 = d.source.x,
+                        y1 = d.source.y,
+                        x2 = d.target.x,
+                        y2 = d.target.y,
+                        dx = x2 - x1,
+                        dy = y2 - y1,
+                        dr = Math.sqrt(dx * dx + dy * dy),
+
+                        // Defaults for normal edge.
+                        drx = dr,
+                        dry = dr,
+                        xRotation = 0, // degrees
+                        largeArc = 0, // 1 or 0
+                        sweep = 1; // 1 or 0
+
+                    // Self edge.
+                    if (x1 === x2 && y1 === y2) {
+                        // Fiddle with this angle to get loop oriented.
+                        xRotation = -45;
+
+                        // Needs to be 1.
+                        largeArc = 1;
+
+                        // Change sweep to change orientation of loop. 
+                        //sweep = 0;
+
+                        // Make drx and dry different to get an ellipse
+                        // instead of a circle.
+                        drx = 30;
+                        dry = 20;
+
+                        // For whatever reason the arc collapses to a point if the beginning
+                        // and ending points of the arc are the same, so kludge it.
+                        x2 = x2 + 1;
+                        y2 = y2 + 1;
+                    }
+
+                    return "M" + x1 + "," + y1 + "A" + drx + "," + dry + " " + xRotation + "," + largeArc + "," + sweep + " " + x2 + "," + y2;
                 });
 
                 edgelabels.attr('transform', function (d) {
@@ -182,7 +304,6 @@
                 d.fx = d3.event.x;
                 d.fy = d3.event.y;
             }
-
         </script>
 
 </body>

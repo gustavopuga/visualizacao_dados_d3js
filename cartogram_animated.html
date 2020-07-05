@@ -2,72 +2,194 @@
 <html>
 
 <head>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.11.0/d3.min.js"></script>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.5/dat.gui.js"></script> -->
-    <script src="https://unpkg.com/cartogram-chart@1"></script>
-    <script src="https://unpkg.com/d3-scale-chromatic"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.0/topojson.min.js"></script>
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 
     <style>
-        body {
-            margin: 0;
+        path {
+            stroke: #000;
+            stroke-width: 1px;
         }
     </style>
 </head>
 
 <body>
-    <div id="brazil" style="width: 100%; height: 100%;"></div>
+
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col justify-content-md-center">
+                <h1>Cartograma Animado</h1>
+                <p></p>
+            </div>
+        </div>
+        <div class="row border rounded">
+            <div class="col-md-12 align-self-md-center">
+                <svg width="1024" , height="720"></svg>
+            </div>
+        </div>
+    </div>
 
     <script>
-        // Controls
-        /*const gui = new dat.GUI();*/
-        const colorScale = d3.scaleSequential(d3.interpolateYlOrBr);
-        const cartogram = Cartogram().valFormatter(n => n.toPrecision(3))(document.getElementById('brazil'));
+        var svg = d3.select("svg"),
+            width = +svg.attr("width"),
+            height = +svg.attr("height"),
+            radius = d3.scaleSqrt().range([0, 45]).clamp(true),
+            randomizer = d3.randomNormal(0.5, 0.2),
+            color = d3.scaleLinear();
 
-        d3.json('https://raw.githubusercontent.com/gustavopuga/visualizacao_dados_d3js/master/json/estados_br.topojson', (error, brazil) => {
-            if (error) throw error;
+        d3.json('https://raw.githubusercontent.com/gustavopuga/visualizacao_dados_d3js/master/json/estados_br.topojson', function (err, brasil) {
+            var neighbors = topojson.neighbors(brasil.objects.estados.geometries),
+                nodes = topojson.feature(brasil, brasil.objects.estados).features;
 
-            let ccData;
+            nodes.forEach(function (node, i) {
 
-            cartogram
-                .topoJson(brazil)
-                .topoObjectName('estados')
-                .value(({ properties: { id } }) => ccData[id])
-                .color(({ properties: { id } }) => colorScale(ccData[id]))
-                .label(({ properties: p }) => `${p.name} (${p.id})`)
-                .onClick(d => console.info(d));
+                var centroid = d3.geoPath().centroid(node);
 
-            const controls = { 'Iterations': 15, 'Randomize': () => { genVals(); render(); } };
-            /*gui.add(controls, 'Iterations', 1, 40).step(1).onChange(render);
-            gui.add(controls, 'Randomize');*/
+                node.x0 = centroid[0];
+                node.y0 = centroid[1];
 
-            genVals();
-            render();
+                cleanUpGeometry(node);
 
-            //
+            });
 
-            function genVals() {
-                ccData = Object.assign(...brazil.objects.estados.geometries
-                    .map(({ properties: { id } }) => ({ [id]: Math.random() }))
-                );
+            var states = svg.selectAll("path")
+                .data(nodes)
+                .enter()
+                .append("path")
+                .attr("d", pathString)
+                .attr("fill", "#ccc");
+
+            simulate();
+
+            function simulate() {
+                nodes.forEach(function (node) {
+                    node.x = node.x0;
+                    node.y = node.y0;
+                    node.r = radius(randomizer());
+                });
+
+                color.domain(d3.extent(nodes, d => d.r));
+
+                var links = d3.merge(neighbors.map(function (neighborSet, i) {
+                    return neighborSet.filter(j => nodes[j]).map(function (j) {
+                        return { source: i, target: j, distance: nodes[i].r + nodes[j].r + 3 };
+                    });
+                }));
+
+                var simulation = d3.forceSimulation(nodes)
+                    .force("cx", d3.forceX().x(d => width / 2).strength(0.02))
+                    .force("cy", d3.forceY().y(d => height / 2).strength(0.02))
+                    .force("link", d3.forceLink(links).distance(d => d.distance))
+                    .force("x", d3.forceX().x(d => d.x).strength(0.1))
+                    .force("y", d3.forceY().y(d => d.y).strength(0.1))
+                    .force("collide", d3.forceCollide().strength(0.8).radius(d => d.r + 3))
+                    .stop();
+
+                while (simulation.alpha() > 0.1) {
+                    simulation.tick();
+                }
+
+                nodes.forEach(function (node) {
+                    var circle = pseudocircle(node),
+                        closestPoints = node.rings.slice(1).map(function (ring) {
+                            var i = d3.scan(circle.map(point => distance(point, ring.centroid)));
+                            return ring.map(() => circle[i]);
+                        }),
+                        interpolator = d3.interpolateArray(node.rings, [circle, ...closestPoints]);
+
+                    node.interpolator = function (t) {
+                        var str = pathString(interpolator(t));
+                        // Prevent some fill-rule flickering for MultiPolygons
+                        if (t > 0.99) {
+                            return str.split("Z")[0] + "Z";
+                        }
+                        return str;
+                    };
+                });
+
+                states
+                    .sort((a, b) => b.r - a.r)
+                    .transition()
+                    .delay(1000)
+                    .duration(1500)
+                    .attrTween("d", node => node.interpolator)
+                    .attr("fill", d => d3.interpolateSpectral(color(d.r)))
+                    .transition()
+                    .delay(1000)
+                    .attrTween("d", node => t => node.interpolator(1 - t))
+                    .attr("fill", "#ccc")
+                    .on("end", (d, i) => i || simulate());
+
             }
 
-            function render() {
-                cartogram.iterations(controls.Iterations);
-                console.info(window.innerWidth);
-                console.info(window.innerHeight);
-                var margin = { top: 10, right: 30, bottom: 30, left: 40 },
-                    width = 1024 - margin.left - margin.right,
-                    height = 2014 - margin.top - margin.bottom;
-
-                // append the svg object to the body of the page
-                var svg = d3.select(".cartogram")
-                    .attr("width", width + margin.left + margin.right)
-                    .attr("height", height + margin.top + margin.bottom)
-                    .append("g")
-                    .attr("transform",
-                        "translate(" + margin.left + "," + margin.top + ")");
-            }
         });
+
+        function pseudocircle(node) {
+            return node.rings[0].map(function (point) {
+                var angle = node.startingAngle - 2 * Math.PI * (point.along / node.perimeter);
+                return [
+                    Math.cos(angle) * node.r + node.x,
+                    Math.sin(angle) * node.r + node.y
+                ];
+            });
+        }
+
+        function cleanUpGeometry(node) {
+
+            node.rings = (node.geometry.type === "Polygon" ? [node.geometry.coordinates] : node.geometry.coordinates);
+
+            node.rings = node.rings.map(function (polygon) {
+                polygon[0].area = d3.polygonArea(polygon[0]);
+                polygon[0].centroid = d3.polygonCentroid(polygon[0]);
+                return polygon[0];
+            });
+
+            node.rings.sort((a, b) => b.area - a.area);
+
+            node.perimeter = d3.polygonLength(node.rings[0]);
+
+            // Optional step, but makes for more circular circles
+            bisect(node.rings[0], node.perimeter / 72);
+
+            node.rings[0].reduce(function (prev, point) {
+                point.along = prev ? prev.along + distance(point, prev) : 0;
+                node.perimeter = point.along;
+                return point;
+            }, null);
+
+            node.startingAngle = Math.atan2(node.rings[0][0][1] - node.y0, node.rings[0][0][0] - node.x0);
+
+        }
+
+        function bisect(ring, maxSegmentLength) {
+            for (var i = 0; i < ring.length; i++) {
+                var a = ring[i], b = i === ring.length - 1 ? ring[0] : ring[i + 1];
+
+                while (distance(a, b) > maxSegmentLength) {
+                    b = midpoint(a, b);
+                    ring.splice(i + 1, 0, b);
+                }
+            }
+        }
+
+        function distance(a, b) {
+            return Math.sqrt((a[0] - b[0]) * (a[0] - b[0]) + (a[1] - b[1]) * (a[1] - b[1]));
+        }
+
+        function midpoint(a, b) {
+            return [a[0] + (b[0] - a[0]) * 0.5, a[1] + (b[1] - a[1]) * 0.5];
+        }
+
+        function pathString(d) {
+            return (d.rings || d).map(ring => "M" + ring.join("L") + "Z").join(" ");
+        }
+
     </script>
 </body>
 
