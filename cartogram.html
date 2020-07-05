@@ -8,7 +8,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.11.0/d3.min.js"></script>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.5/dat.gui.js"></script> -->
-    <script src="https://unpkg.com/cartogram-chart@1"></script>
+    <script src="http://unpkg.com/cartogram-chart"></script>
     <script src="https://unpkg.com/d3-scale-chromatic"></script>
 
     <style>
@@ -36,52 +36,53 @@
 
     <script>
 
+
         const colorScale = d3.scaleSequential(d3.interpolateYlOrBr);
         const cartogram = Cartogram().valFormatter(n => n.toPrecision(3))(document.getElementById('brazil'));
 
-        var map = d3.map();
+        function draw(data) {
 
-        d3.queue()
-            .defer(d3.json, "https://raw.githubusercontent.com/gustavopuga/visualizacao_dados_d3js/master/json/estados_br.topojson")
-            .defer(d3.csv, "https://raw.githubusercontent.com/gustavopuga/visualizacao_dados_d3js/master/datasets/covid_map.csv", function (d) { map.set(d.cod_ibge, +d.casosAcumulados); })
-            .await(ready);
+            d3.json('https://raw.githubusercontent.com/gustavopuga/visualizacao_dados_d3js/master/json/estados_br.topojson', (error, brazil) => {
+                if (error) throw error;
 
-        function ready(error, brazil) {
-            if (error) throw error;
+                let ccData;
 
-            let ccData;
+                var projection = d3.geoMercator()
+                    .scale(1000)
+                    .translate([window.innerWidth, window.innerHeight / 8]);
+                cartogram
+                    .topoJson(brazil)
+                    .topoObjectName('estados')
+                    .projection(projection)
+                    .height(750)
+                    .value(({ properties: { codigo_ibg } }) => ccData[codigo_ibg])
+                    .color(({ properties: { codigo_ibg } }) => colorScale(ccData[codigo_ibg]))
+                    .label(({ properties: p }) => `${p.name} (${p.id})`)
+                    .onClick(d => console.info(d));
 
+                const controls = { 'Iterations': 4, 'Randomize': () => { genVals(); render(); } };
 
-            var projection = d3.geoMercator()
-                .scale(1000)
-                .translate([window.innerWidth, window.innerHeight / 8]);
-            cartogram
-                .topoJson(brazil)
-                .topoObjectName('estados')
-                .projection(projection)
-                .height(750)
-                .value(({ properties: { id } }) => ccData[id])
-                .color(({ properties: { id } }) => colorScale(ccData[id]))
-                .label(({ properties: p }) => `${p.name} (${p.id})`)
-                .onClick(d => console.info(d));
+                genVals();
+                render();
 
-            const controls = { 'Iterations': 1, 'Randomize': () => { genVals(); render(); } };
+                function genVals() {
+                    console.info(data.filter(d => d.cod_ibge == 11) );
+                    ccData = Object.assign(...brazil.objects.estados.geometries
+                        .map(({ properties: { codigo_ibg } }) => ({ [codigo_ibg]: data.filter(d => d.cod_ibge == codigo_ibg)[0].casosAcumulados/10000 }))
+                    );
+                }
 
-            genVals();
-            render();
+                function render() {
+                    cartogram.iterations(controls.Iterations);
+                }
 
-            function genVals() {
-                ccData = Object.assign(...brazil.objects.estados.geometries
-                    .map(map)
-                );
-                console.info(ccData)
-            }
-
-            function render() {
-                cartogram.iterations(controls.Iterations);
-            }
+            });
         }
 
+        d3.csv('https://raw.githubusercontent.com/gustavopuga/visualizacao_dados_d3js/master/datasets/covid_map.csv', (error, data) => {
+                if (error) throw error;
+                draw(data);
+        });
     </script>
 </body>
 
