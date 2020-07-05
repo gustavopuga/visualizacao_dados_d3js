@@ -23,10 +23,8 @@ Esta página armazena as atividades desenvolvida durante o curso de Visualizaç�
 [Clique aqui para visualizar](https://gustavopuga.github.io/visualizacao_dados_d3js/multi_line_chart.html)
 
 ## Tarefa 8 v1: Choropleth GEOJSON
-[Clique aqui para visualizar](https://gustavopuga.github.io/visualizacao_dados_d3js/choropleth.html)
-
-## Tarefa 8 v2: Choropleth TOPOJSON
-[Clique aqui para visualizar](https://gustavopuga.github.io/visualizacao_dados_d3js/choropleth_topojson.html)
+[Versão GEOJSON](https://gustavopuga.github.io/visualizacao_dados_d3js/choropleth.html)\
+[Versão TOPOJSON](https://gustavopuga.github.io/visualizacao_dados_d3js/choropleth_topojson.html)
 
 ## Tarefa 9: Cartograma
 [Clique aqui para visualizar](https://gustavopuga.github.io/visualizacao_dados_d3js/cartogram.html)
@@ -41,10 +39,8 @@ Esta página armazena as atividades desenvolvida durante o curso de Visualizaç�
 [Clique aqui para visualizar](https://gustavopuga.github.io/visualizacao_dados_d3js/tree.html)
 
 ## Tarefa 13: Sunburst
-[Clique aqui para visualizar](https://gustavopuga.github.io/visualizacao_dados_d3js/sunburst.html)
-
-## Tarefa 13 v2: Sunburst Brasil
-[Clique aqui para visualizar](https://gustavopuga.github.io/visualizacao_dados_d3js/sunburst_brasil.html)
+[Versão 1](https://gustavopuga.github.io/visualizacao_dados_d3js/sunburst.html)\
+[Versão 2](https://gustavopuga.github.io/visualizacao_dados_d3js/sunburst_brasil.html)
 
 ## Tarefa 14: Grafo
 [GraphOnline.ru](http://graphonline.ru/en/?graph=PnztiUaSpdJsXXVVZZcst)\
