@@ -23,9 +23,9 @@
     <div class="container">
         <div class="row justify-content-md-center">
             <div class="col justify-content-md-center">
-                <h1>Cartograma</h1>
-                <h5 style="color: gray;">Casos de COVID - 19 (09/05/2020)</h5>
-                <p>Casos registrados entre março e maio de 2020</p>
+                <h1>Cartograma Interativo</h1>
+                <h5 style="color: gray;">Casos e Óbitos de COVID - 19</h5>
+                <p>Registros até 20 de abril de 2020</p>
             </div>
         </div>
         <div class="row border rounded">
@@ -37,14 +37,18 @@
 
     <script>
 
+        const keys = {
+            "Casos": "casosAcumulados",
+            "Mortes": "obitosAcumulados"
+        }
 
-        const colorScale = d3.scaleSequential(d3.interpolateYlOrBr);
-        const cartogram = Cartogram().valFormatter(n => n.toPrecision(3))(document.getElementById('brazil'));
-
-        function draw(data) {
+        function draw(data, metric) {
 
             d3.json('https://raw.githubusercontent.com/gustavopuga/visualizacao_dados_d3js/master/json/estados_br.topojson', (error, brazil) => {
                 if (error) throw error;
+                
+                const colorScale = d3.scaleSequential(d3.interpolateYlOrBr);
+                const cartogram = Cartogram().valFormatter(n => n.toPrecision(3))(document.getElementById('brazil'));
 
                 let ccData;
 
@@ -56,9 +60,13 @@
                     .topoObjectName('estados')
                     .projection(projection)
                     .height(750)
-                    .value(({ properties: { codigo_ibg } }) => ccData[codigo_ibg])
-                    .color(({ properties: { codigo_ibg } }) => colorScale(ccData[codigo_ibg]))
-                    .label(({ properties: p }) => `${p.name} (${data.filter(d => d.cod_ibge == p.codigo_ibg)[0].casosAcumulados} casos)`);
+                    .value(({ properties: { sigla } }) => ccData[sigla])
+                    .color(({ properties: { sigla } }) => colorScale(ccData[sigla]));
+                if (metric == 'Casos') {
+                    cartogram.label(({ properties: p }) => `${p.name} (${data.filter(d => d.estado == p.sigla)[0].casosAcumulados} casos)`);
+                } else {
+                    cartogram.label(({ properties: p }) => `${p.name} (${data.filter(d => d.estado == p.sigla)[0].obitosAcumulados} óbitos)`);
+                }
 
                 const controls = { 'Iterations': 4, 'Randomize': () => { genVals(); render(); } };
 
@@ -66,10 +74,19 @@
                 render();
 
                 function genVals() {
-                    console.info(data.filter(d => d.cod_ibge == 11) );
-                    ccData = Object.assign(...brazil.objects.estados.geometries
-                        .map(({ properties: { codigo_ibg } }) => ({ [codigo_ibg]: data.filter(d => d.cod_ibge == codigo_ibg)[0].casosAcumulados/10000 }))
-                    );
+                    if (metric == 'Casos') {
+                        ccData = Object.assign(...brazil.objects.estados.geometries
+                            .map(({ properties: { sigla } }) => ({
+                                [sigla]: data.filter(d => d.estado == sigla)[0].casosAcumulados / 10000
+                            }))
+                        );
+                    } else {
+                        ccData = Object.assign(...brazil.objects.estados.geometries
+                            .map(({ properties: { sigla } }) => ({
+                                [sigla]: data.filter(d => d.estado == sigla)[0].obitosAcumulados / 100,
+                            }))
+                        );
+                    }
                 }
 
                 function render() {
@@ -79,10 +96,37 @@
             });
         }
 
-        d3.csv('https://raw.githubusercontent.com/gustavopuga/visualizacao_dados_d3js/master/datasets/covid_map.csv', (error, data) => {
+        function cartogramDraw(metric) {
+            d3.csv('https://raw.githubusercontent.com/gustavopuga/visualizacao_dados_d3js/master/datasets/covid_abril_cartograma.csv', (error, data) => {
                 if (error) throw error;
-                draw(data);
-        });
+                draw(data, metric);
+            });
+        }
+
+        var changeMetric = function () {
+            var metric = d3.select(this).property('value');
+
+            // Remove old chart
+            var elements = document.getElementsByClassName("cartogram");
+            while (elements.length > 0) {
+                elements[0].parentNode.removeChild(elements[0]);
+            }
+
+            cartogramDraw(metric);
+        };
+
+        var keyMap = Object.keys(keys);
+        var select = d3.select("#brazil")
+            .insert("select", "svg")
+            .on("change", changeMetric);
+
+        select.selectAll("option")
+            .data(Object.keys(keys))
+            .enter().append("option")
+            .attr("value", function (d) { return d; })
+            .text(function (d) { return d; });
+
+        cartogramDraw(keyMap[0])
     </script>
 </body>
 
