@@ -24,7 +24,8 @@
         <div class="row justify-content-md-center">
             <div class="col justify-content-md-center">
                 <h1>Cartograma</h1>
-                <p></p>
+                <h5 style="color: gray;">Casos de COVID - 19 (09/05/2020)</h5>
+                <p>Casos registrados entre março e maio de 2020</p>
             </div>
         </div>
         <div class="row border rounded">
@@ -57,8 +58,7 @@
                     .height(750)
                     .value(({ properties: { codigo_ibg } }) => ccData[codigo_ibg])
                     .color(({ properties: { codigo_ibg } }) => colorScale(ccData[codigo_ibg]))
-                    .label(({ properties: p }) => `${p.name} (${p.id})`)
-                    .onClick(d => console.info(d));
+                    .label(({ properties: p }) => `${p.name} (${data.filter(d => d.cod_ibge == p.codigo_ibg)[0].casosAcumulados} casos)`);
 
                 const controls = { 'Iterations': 4, 'Randomize': () => { genVals(); render(); } };
 
