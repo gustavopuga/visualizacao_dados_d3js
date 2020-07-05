@@ -47,6 +47,12 @@ Esta página armazena as atividades desenvolvida durante o curso de Visualizaç�
 [Clique aqui para visualizar](https://gustavopuga.github.io/visualizacao_dados_d3js/sunburst_brasil.html)
 
 ## Tarefa 14: Grafo
-[GraphOnline.ru](http://graphonline.ru/en/?graph=PnztiUaSpdJsXXVVZZcst)
-[Chord Diagram](https://gustavopuga.github.io/visualizacao_dados_d3js/chord.html)
+[GraphOnline.ru](http://graphonline.ru/en/?graph=PnztiUaSpdJsXXVVZZcst)\
+[Chord Diagram](https://gustavopuga.github.io/visualizacao_dados_d3js/chord.html)\
 [Grafo de Força](https://gustavopuga.github.io/visualizacao_dados_d3js/force.html)
+
+## Trabalho Final: Ontologia
+[Grafo de força V1](https://gustavopuga.github.io/visualizacao_dados_d3js/ontology_graph.html)\
+[Grafo de força V2](https://gustavopuga.github.io/visualizacao_dados_d3js/ontology_circle.html)\
+[Grafo de força V3](https://gustavopuga.github.io/visualizacao_dados_d3js/ontology_name.html)\
+[SVG WebVOWL](https://gustavopuga.github.io/visualizacao_dados_d3js/webVowl.html)

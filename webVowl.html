@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.15.0/d3.min.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .img-zoom-container {
+            position: relative;
+        }
+
+        .img-zoom-lens {
+            position: absolute;
+            border: 1px solid #d4d4d4;
+            /*set the size of the lens:*/
+            width: 40px;
+            height: 40px;
+        }
+
+        .img-zoom-result {
+            border: 1px solid #d4d4d4;
+            /*set the size of the result div:*/
+            width: 300px;
+            height: 300px;
+        }
+    </style>
+
+    <title>Laboratório Ontologia - WebVOWL</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col justify-content-md-center">
+                <h1>Laboratório Ontologia - SVG Gerado pelo WebVOWL</h1>
+                <h5 style="color: gray;">Ontologia sobre Sistemas Dinâmicos Complexos</h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div id='chart' class="img-zoom-container">
+                    <img id="image"
+                        src="https://raw.githubusercontent.com/gustavopuga/visualizacao_dados_d3js/master/svg/ontologia_sistema_dinamico.owl.svg"
+                        height="600" width="800" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div id="result" class="img-zoom-result"></div>
+            </div>
+        </div>
+
+        <script>
+
+            function imageZoom(imgID, resultID) {
+                var img, lens, result, cx, cy;
+                img = document.getElementById(imgID);
+                result = document.getElementById(resultID);
+                /* Create lens: */
+                lens = document.createElement("DIV");
+                lens.setAttribute("class", "img-zoom-lens");
+                /* Insert lens: */
+                img.parentElement.insertBefore(lens, img);
+                /* Calculate the ratio between result DIV and lens: */
+                cx = result.offsetWidth / lens.offsetWidth;
+                cy = result.offsetHeight / lens.offsetHeight;
+                /* Set background properties for the result DIV */
+                result.style.backgroundImage = "url('" + img.src + "')";
+                result.style.backgroundSize = (img.width * cx) + "px " + (img.height * cy) + "px";
+                /* Execute a function when someone moves the cursor over the image, or the lens: */
+                lens.addEventListener("mousemove", moveLens);
+                img.addEventListener("mousemove", moveLens);
+                /* And also for touch screens: */
+                lens.addEventListener("touchmove", moveLens);
+                img.addEventListener("touchmove", moveLens);
+                function moveLens(e) {
+                    var pos, x, y;
+                    /* Prevent any other actions that may occur when moving over the image */
+                    e.preventDefault();
+                    /* Get the cursor's x and y positions: */
+                    pos = getCursorPos(e);
+                    /* Calculate the position of the lens: */
+                    x = pos.x - (lens.offsetWidth / 2);
+                    y = pos.y - (lens.offsetHeight / 2);
+                    /* Prevent the lens from being positioned outside the image: */
+                    if (x > img.width - lens.offsetWidth) { x = img.width - lens.offsetWidth; }
+                    if (x < 0) { x = 0; }
+                    if (y > img.height - lens.offsetHeight) { y = img.height - lens.offsetHeight; }
+                    if (y < 0) { y = 0; }
+                    /* Set the position of the lens: */
+                    lens.style.left = x + "px";
+                    lens.style.top = y + "px";
+                    /* Display what the lens "sees": */
+                    result.style.backgroundPosition = "-" + (x * cx) + "px -" + (y * cy) + "px";
+                }
+                function getCursorPos(e) {
+                    var a, x = 0, y = 0;
+                    e = e || window.event;
+                    /* Get the x and y positions of the image: */
+                    a = img.getBoundingClientRect();
+                    /* Calculate the cursor's x and y coordinates, relative to the image: */
+                    x = e.pageX - a.left;
+                    y = e.pageY - a.top;
+                    /* Consider any page scrolling: */
+                    x = x - window.pageXOffset;
+                    y = y - window.pageYOffset;
+                    return { x: x, y: y };
+                }
+
+            }
+            imageZoom("image", "result");
+
+        </script>
+</body>
+
+</html>
