@@ -1,9 +1,40 @@
+<!-- BASED ON https://github.com/vasturiano/force-graph -->
 <html>
+    <header>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <script src="//unpkg.com/force-graph"></script>
+    </header>
 
 <body>
-
-    <script src="//unpkg.com/force-graph"></script>
-    <div id="graph"></div>
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col justify-content-md-center">
+                <h1>Laboratório Ontologia - Grafo</h1>
+                <h5 style="color: gray;">Ontologia sobre Sistemas Dinâmicos Complexos</h5>
+                <p>O gráfico possui eventos, drag and drop e tooltip. O fluxo demonstra a direção da conexão e as cores indicam: 
+                    <ul class="list-inline text-center">
+                        <li class="list-inline-item">
+                            <span class="badge badge-pill badge-success"" style="background-color: #f39c12">Classe</span>
+                        </li>
+                        <li class="list-inline-item">
+                            <span class="badge badge-pill badge-success"" style="background-color: #2980b9">Propriedades de objeto</span>
+                        </li>
+                        <li class="list-inline-item">
+                            <span class="badge badge-pill badge-success" style="background-color: #27ae60">Atributos</span>
+                        </li>
+                        <li class="list-inline-item">
+                            <span class="badge badge-pill badge-success" style="background-color: #8e44ad">Individuos</span>
+                        </li>
+                      </ul>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 align-self-md-center">
+                <div id="graph"></div>
+            </div>
+        </div>
 
     <script>
 
